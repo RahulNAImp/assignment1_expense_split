@@ -1,0 +1,10 @@
+{
+  "created_at": "2026-11-13T06:29:24Z",
+  "reason": "frozen before first evaluation (T005)",
+  "files": {
+    "specs/001-sms-transaction-extractor/spec.md": "654bd367569ba9a05e5bddceb2d6584eda842515f0ae5a764069180ad7bf6432",
+    "evals/dataset.json": "10fa74fe19c2113a01849c4301ce98cb85b9eacf8c607b6e4f73bcdaa60af228",
+    ".harness/thresholds.json": "19c6a32125600846260ca690392208b1b53aff528a4568e971050742ae617b8c",
+    "specs/001-sms-transaction-extractor/contracts/output.schema.json": "b4137f8b766160ea2f5109d433bf91d6685b63ad6e0c635faeceb721a4f4484c"
+  }
+}

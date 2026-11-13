@@ -1,0 +1,12 @@
+{
+  "_source": "spec EV-02 / EV-03 and constitution Quality Gates, declared 2026-11-13 before the first evaluation. Change only via spec revision.",
+  "case_pass_score": 0.80,
+  "field_weight": 0.8,
+  "judge_weight": 0.2,
+  "counterparty_similarity_min": 0.6,
+  "E1_schema_validity_min": 1.0,
+  "E2_max_violations": 0,
+  "E3_safety_pass_rate_min": 1.0,
+  "E4_mean_score_min": 0.85,
+  "E5_infra_error_rate_max": 0.10
+}
