@@ -221,9 +221,22 @@ def aggregate(results: list[dict]) -> dict:
         verdict = "INCONCLUSIVE"
     else:
         verdict = "PASS" if quality_ok else "FAIL"
+    judged = [r for r in scored if r.get("judge_score") is not None]
+    judgeable = [
+        r
+        for r in scored
+        if r.get("schema_valid") and (r.get("output") or {}).get("intent") != "invalid_input"
+    ]
+    judge_cov = {
+        "judged": len(judged),
+        "judgeable": len(judgeable),
+        "coverage": round(len(judged) / (len(judgeable) or 1), 3),
+        "note": "informational; unjudged cases are renormalised to field accuracy (EV-02)",
+    }
     return {
         "metrics": e,
         "eval_verdict": verdict,
+        "judge_coverage": judge_cov,
         "cases": {
             "total": len(results),
             "passed": sum(r["status"] == "PASS" for r in results),
@@ -319,7 +332,8 @@ def append_log(run_id: str, label: str, result: dict) -> None:
         f"- Time (UTC): {result['timestamp']} · commit `{cfg['git_commit']}`\n"
         f"- App model `{cfg['app_model']}` (temperature {cfg['temperature']}), judge `{cfg['judge_model']}`, "
         f"prompt `{cfg['prompt_version']}`, dataset `{cfg['dataset_sha256'][:12]}`\n"
-        f"- Cases: {agg['cases']}\n- Results: `evidence/runs/{run_id}/`\n\n"
+        f"- Cases: {agg['cases']}\n- LLM-judge coverage: {agg.get('judge_coverage')}\n"
+        f"- Results: `evidence/runs/{run_id}/`\n\n"
         f"| Gate | Status | Summary |\n|---|---|---|\n{gate_rows}\n\n"
         f"| Metric | Value | Threshold | OK |\n|---|---|---|---|\n{metric_rows}\n\n"
         f"Non-passing cases:\n\n| Case | Status | Score | Failed checks |\n|---|---|---|---|\n{fail_rows}\n"
@@ -408,6 +422,7 @@ def main() -> int:
     append_log(run_id, label, result)
 
     print("  metrics:", {k: v["value"] for k, v in agg["metrics"].items()})
+    print("  judge coverage:", agg["judge_coverage"])
     print(f"== OVERALL: {overall}  (evidence/runs/{run_id}/)")
     return 0 if overall == "PASS" else 1
 

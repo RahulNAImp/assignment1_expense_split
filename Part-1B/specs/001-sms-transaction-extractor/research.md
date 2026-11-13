@@ -32,3 +32,12 @@
   → `ModelServiceError`. The runner retries 3× with exponential backoff (5 s, 10 s, 20 s), then
   records `INFRA_ERROR`. Schema/guardrail failures are application failures and are never retried
   by the harness.
+
+## Revision History
+- 2026-11-13 (after run-003): **judge model changed from `gemini-3.5-flash` to `gemma-4-31b-it`.**
+  Evidence: run-003 `judge_reason` shows `429 RESOURCE_EXHAUSTED … free_tier_requests, limit: 20
+  … per day`. Only 1 of 23 judgeable cases was judged, and the rest were renormalised as EV-02
+  allows. Gemma 4 31B is a different model family from the app model, so Constitution V still
+  holds, and it has a much larger free quota. It is slower (about 30 s per call). The
+  thresholds, dataset, schema and scoring formula are unchanged. The harness now also reports
+  `judge_coverage`.

@@ -16,7 +16,7 @@ runs `evals/dataset.json` through the app and scores each case in three layers
 **Language/Version**: Python 3.11+
 **Primary Dependencies**: `google-genai` (Gemini SDK), `jsonschema`, `python-dotenv`
 **Model (app)**: `gemini-3.5-flash-lite`, temperature 0.2 (env `TXNSENSE_MODEL`, `TXNSENSE_TEMPERATURE`)
-**Model (judge)**: `gemini-3.5-flash`, temperature 0. A different model and a different call from
+**Model (judge)**: `gemma-4-31b-it`, temperature 0 (revised from `gemini-3.5-flash` after run-003; see research.md Revision History). A different model and a different call from
 the app, as Constitution V requires.
 **Storage**: none (stateless); evaluation evidence written to `evidence/`
 **Testing**: pytest for deterministic code with a fake LLM client (no network); the eval harness
