@@ -41,6 +41,18 @@ def _needs_review_model_output() -> dict:
     }
 
 
+def _normalise_inv01(result: object) -> object:
+    """INV-01 before validation: only intent=transaction may carry a transaction object.
+
+    Acceptance case H06: for needs_review the model sometimes returns a partial transaction
+    (amount=null). That object is discarded rather than letting it fail the schema and losing an
+    otherwise correct needs_review answer. Nothing is invented; data is only removed.
+    """
+    if isinstance(result, dict) and result.get("intent") != "transaction":
+        result["transaction"] = None
+    return result
+
+
 def parse_sms(
     text: str,
     received_at: str | None = None,
@@ -62,6 +74,7 @@ def parse_sms(
             result = json.loads(raw)
         except json.JSONDecodeError:
             continue
+        result = _normalise_inv01(result)
         if not schema_errors(result):
             return guardrails.apply(result, text)
     return _needs_review_model_output()

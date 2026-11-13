@@ -116,3 +116,42 @@ def test_find_otps():
     assert guardrails.find_otps("834221 is your OTP for login") == {"834221"}
     assert guardrails.find_otps("Your OTP is 4821") == {"4821"}
     assert guardrails.find_otps("Rs 500 debited") == set()
+
+
+def test_inv01_partial_transaction_on_needs_review_is_normalised_not_rejected():
+    """Acceptance H06: needs_review + partial transaction (amount=null) keeps the real reason."""
+    model = {
+        "intent": "needs_review",
+        "transaction": {
+            "direction": "debit",
+            "amount": None,
+            "currency": "INR",
+            "channel": "card",
+            "counterparty": "AMAZON",
+            "category": "shopping",
+            "account_last4": "7712",
+            "txn_date": "2026-11-13",
+            "reference_id": None,
+            "available_balance": None,
+        },
+        "missing_fields": ["amount"],
+        "risk": {"level": "none", "reasons": []},
+        "summary": "Card transaction at AMAZON detected, but the amount is missing.",
+        "confidence": 0.9,
+    }
+    client = FakeClient(json.dumps(model))
+    out = parse_sms("Your HDFC Bank Credit Card XX7712 has been used at AMAZON.", R, client=client)
+    assert client.calls == 1
+    assert out["intent"] == "needs_review"
+    assert out["missing_fields"] == ["amount"]
+    assert out["transaction"] is None
+    assert schema_errors(out) == []
+
+
+def test_transaction_intent_with_invalid_object_still_rejected():
+    """Normalisation must not hide a broken transaction: intent=transaction + amount=null fails."""
+    bad = ok_txn()
+    bad["transaction"]["amount"] = None
+    client = FakeClient(json.dumps(bad), json.dumps(bad))
+    out = parse_sms("Rs debited", R, client=client)
+    assert out["missing_fields"] == ["model_output"]
