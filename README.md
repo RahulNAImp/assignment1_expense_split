@@ -31,6 +31,14 @@ harness that is independent of the AI-generated code.
 The **git history** is part of the evidence: each Spec Kit step, test lock, initial generation,
 harness run and repair is a separate commit (`git log --oneline`).
 
+## Independent acceptance test (new data)
+
+[acceptance/](acceptance/) holds a one-shot test on data that the spec tests and eval dataset
+never used: a 16-step SplitKaro flat-share scenario with hand-computed paise, and 12 holdout SMS for
+TxnSense. Result: **1A 16/16 PASS, 1B 10/11 PASS (0 guardrail leaks)**. The one miss (H06) is
+diagnosed in [acceptance/RESULTS.md](acceptance/RESULTS.md). Run it with
+`Part-1B/.venv/bin/python acceptance/run_acceptance.py`.
+
 ## How to run
 
 Prerequisites: Python ≥ 3.11 and [uv](https://docs.astral.sh/uv/) (or `python -m venv` + `pip`).
