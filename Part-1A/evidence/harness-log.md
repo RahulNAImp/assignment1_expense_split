@@ -48,6 +48,22 @@
 | G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
 | G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |
 
+### run-003 — demo run (video) — **PASS**
+
+- Time (UTC): 2026-11-13T06:41:49Z
+- Git commit under test: `253c047`
+- Result file: `evidence/harness-results/run-003.json`
+
+| Gate | Result | Summary |
+|------|--------|---------|
+| G0 Integrity | ✅ PASS | 16 locked files; changed=0 missing=0 new_tests=0 |
+| G1 Lint & format | ✅ PASS | 0 lint violation(s), 0 file(s) need formatting |
+| G2 Security/SAST | ✅ PASS | 0 finding(s) >= MEDIUM (0 total incl. LOW) |
+| G3 Spec tests | ✅ PASS | 107/107 passed, 0 failed, 0 skipped |
+| G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
+| G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |
+
+> run-003 was executed live while recording the demo video, on the same commit as run-002 (src unchanged).
 
 ## 3. Failure → repair cycle (run-001 → run-002)
 

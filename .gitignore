@@ -22,3 +22,6 @@ dist/
 .DS_Store
 .idea/
 .vscode/
+
+# Demo video build output (large binaries; video is shared via Google Drive)
+demo/build/
