@@ -1,6 +1,7 @@
 """Unit tests for money handling (Constitution II; FR-003, FR-004; AC-008, AC-010, AC-018)."""
 
 import pytest
+
 from splitkaro.errors import ValidationError
 from splitkaro.money import (
     allocate_equal,

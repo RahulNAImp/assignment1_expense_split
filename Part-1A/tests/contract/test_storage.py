@@ -3,6 +3,7 @@
 import json
 
 import pytest
+
 from splitkaro.cli import main
 
 

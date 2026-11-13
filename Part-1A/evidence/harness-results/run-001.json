@@ -1,0 +1,125 @@
+{
+  "run_id": "run-001",
+  "label": "initial generation (T028)",
+  "timestamp": "2026-11-13T06:14:18Z",
+  "git_commit": "d14de50",
+  "python": "3.11.17",
+  "thresholds": {
+    "_source": "Constitution v1.0.0 - Measurable Engineering Constraints. Change only via constitution amendment.",
+    "lint_max_violations": 0,
+    "bandit_min_severity": "MEDIUM",
+    "bandit_max_findings": 0,
+    "tests_min_pass_rate": 1.0,
+    "tests_max_skipped": 0,
+    "coverage_min_percent": 90,
+    "require_every_ac_tested": true
+  },
+  "overall": "FAIL",
+  "gates": [
+    {
+      "gate": "G0 Integrity",
+      "status": "PASS",
+      "summary": "16 locked files; changed=0 missing=0 new_tests=0",
+      "details": {
+        "changed": [],
+        "missing": [],
+        "new_unlocked_tests": [],
+        "lock_reason": "initial approval of spec + spec-derived tests (T018)"
+      }
+    },
+    {
+      "gate": "G1 Lint & format",
+      "status": "FAIL",
+      "summary": "3 lint violation(s), 0 file(s) need formatting",
+      "details": {
+        "violations": [
+          {
+            "rule": "I001",
+            "file": "tests/contract/test_storage.py",
+            "line": 3,
+            "message": "Import block is un-sorted or un-formatted"
+          },
+          {
+            "rule": "I001",
+            "file": "tests/property/test_invariants.py",
+            "line": 4,
+            "message": "Import block is un-sorted or un-formatted"
+          },
+          {
+            "rule": "I001",
+            "file": "tests/unit/test_money.py",
+            "line": 3,
+            "message": "Import block is un-sorted or un-formatted"
+          }
+        ],
+        "unformatted": []
+      },
+      "stdout": "23 files already formatted\n"
+    },
+    {
+      "gate": "G2 Security/SAST",
+      "status": "PASS",
+      "summary": "0 finding(s) >= MEDIUM (0 total incl. LOW)",
+      "details": {
+        "blocking": [],
+        "all": []
+      }
+    },
+    {
+      "gate": "G3 Spec tests",
+      "status": "FAIL",
+      "summary": "0/4 passed, 4 failed, 0 skipped",
+      "details": {
+        "failures": [
+          {
+            "test": "::tests.contract.test_storage",
+            "acceptance_criterion": null,
+            "kind": "error",
+            "message": "collection failure",
+            "detail": "ImportError while importing test module '/Users/rahulnandanwar/Documents/Stuff/Bits Study material/AI Argumented SDLC/assignment 1/Assignment-1/Part-1A/tests/contract/test_storage.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n../../../../../../../.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/contract/test_storage.py:6: in <module>\n    from splitkaro.cli import main\nE   ModuleNotFoundError: No module named 'splitkaro'"
+          },
+          {
+            "test": "::tests.property.test_invariants",
+            "acceptance_criterion": null,
+            "kind": "error",
+            "message": "collection failure",
+            "detail": "ImportError while importing test module '/Users/rahulnandanwar/Documents/Stuff/Bits Study material/AI Argumented SDLC/assignment 1/Assignment-1/Part-1A/tests/property/test_invariants.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n../../../../../../../.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/property/test_invariants.py:14: in <module>\n    from splitkaro.cli import main\nE   ModuleNotFoundError: No module named 'splitkaro'"
+          },
+          {
+            "test": "::tests.unit.test_money",
+            "acceptance_criterion": null,
+            "kind": "error",
+            "message": "collection failure",
+            "detail": "ImportError while importing test module '/Users/rahulnandanwar/Documents/Stuff/Bits Study material/AI Argumented SDLC/assignment 1/Assignment-1/Part-1A/tests/unit/test_money.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n../../../../../../../.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/unit/test_money.py:4: in <module>\n    from splitkaro.errors import ValidationError\nE   ModuleNotFoundError: No module named 'splitkaro'"
+          },
+          {
+            "test": "::tests.unit.test_performance",
+            "acceptance_criterion": null,
+            "kind": "error",
+            "message": "collection failure",
+            "detail": "ImportError while importing test module '/Users/rahulnandanwar/Documents/Stuff/Bits Study material/AI Argumented SDLC/assignment 1/Assignment-1/Part-1A/tests/unit/test_performance.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n../../../../../../../.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/unit/test_performance.py:6: in <module>\n    from splitkaro.cli import main\nE   ModuleNotFoundError: No module named 'splitkaro'"
+          }
+        ]
+      },
+      "stdout": "\n==================================== ERRORS ====================================\n_______________ ERROR collecting tests/contract/test_storage.py ________________\nImportError while importing test module '/Users/rahulnandanwar/Documents/Stuff/Bits Study material/AI Argumented SDLC/assignment 1/Assignment-1/Part-1A/tests/contract/test_storage.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n../../../../../../../.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/contract/test_storage.py:6: in <module>\n    from splitkaro.cli import main\nE   ModuleNotFoundError: No module named 'splitkaro'\n______________ ERROR collecting tests/property/test_invariants.py ______________\nImportError while importing test module '/Users/rahulnandanwar/Documents/Stuff/Bits Study material/AI Argumented SDLC/assignment 1/Assignment-1/Part-1A/tests/property/test_invariants.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n../../../../../../../.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/property/test_invariants.py:14: in <module>\n    from splitkaro.cli import main\nE   ModuleNotFoundError: No module named 'splitkaro'\n__________________ ERROR collecting tests/unit/test_money.py ___________________\nImportError while importing test module '/Users/rahulnandanwar/Documents/Stuff/Bits Study material/AI Argumented SDLC/assignment 1/Assignment-1/Part-1A/tests/unit/test_money.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n../../../../../../../.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/unit/test_money.py:4: in <module>\n    from splitkaro.errors import ValidationError\nE   ModuleNotFoundError: No module named 'splitkaro'\n_______________ ERROR collecting tests/unit/test_performance.py ________________\nImportError while importing test module '/Users/rahulnandanwar/Documents/Stuff/Bits Study material/AI Argumented SDLC/assignment 1/Assignment-1/Part-1A/tests/unit/test_performance.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n../../../../../../../.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/unit/test_performance.py:6: in <module>\n    from splitkaro.cli import main\nE   ModuleNotFoundError: No module named 'splitkaro'\n=========================== short test summary info ============================\nERROR tests/contract/test_storage.py\nERROR tests/property/test_invariants.py\nERROR tests/unit/test_money.py\nERROR tests/unit/test_performance.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!\n4 errors in 1.16s\n",
+      "stderr": ""
+    },
+    {
+      "gate": "G4 Coverage",
+      "status": "FAIL",
+      "summary": "None% line coverage (threshold 90%)",
+      "details": {
+        "percent": null,
+        "missing_lines": {}
+      }
+    },
+    {
+      "gate": "G5 Traceability",
+      "status": "PASS",
+      "summary": "40/40 acceptance criteria referenced by tests",
+      "details": {
+        "untested": []
+      }
+    }
+  ]
+}

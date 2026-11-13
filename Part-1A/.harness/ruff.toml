@@ -7,3 +7,7 @@ ignore = ["RUF001", "RUF002", "RUF003"]
 
 [lint.per-file-ignores]
 "tests/**" = ["S101", "S603", "S607"]
+
+[lint.isort]
+# Pinned so import classification does not depend on whether src/ exists yet (run-001 finding).
+known-first-party = ["splitkaro", "tests"]

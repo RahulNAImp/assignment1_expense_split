@@ -11,6 +11,7 @@ import tempfile
 
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
+
 from splitkaro.cli import main
 
 MEMBERS = ["asha", "bala", "chitra", "dev", "esha", "farhan"]

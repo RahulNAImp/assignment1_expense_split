@@ -1,6 +1,6 @@
 {
-  "created_at": "2026-11-13T06:12:14Z",
-  "reason": "initial approval of spec + spec-derived tests (T018)",
+  "created_at": "2026-11-13T06:15:00Z",
+  "reason": "re-lock after run-001: 3 blank lines added by ruff isort (I001) in test_storage/test_invariants/test_money; no assertion changed",
   "files": {
     "specs/001-group-expense-splitter/spec.md": "5804bc78fd36baf851d4fb768365e15de3a4dc3b4800657ae624ea25b8d5fd31",
     "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -12,11 +12,11 @@
     "tests/contract/test_expense_unequal.py": "194839669a5b8a087ab1cb53f62efc7dadfaf9cb110e6e0c8b5035086dce91fa",
     "tests/contract/test_groups.py": "a159477a786aed2112f54023f2256ff0d9d48a30c7fba075c327ff6d791d6261",
     "tests/contract/test_settle_pay.py": "8346e1aa1341df6d6377e464561c0ac564d99a6e9d987ae80a13ba4a6d7da5db",
-    "tests/contract/test_storage.py": "31c0389b4d5003710b5d5fb0b150da9281e10b46f3ab2f4570c67df518b203ac",
+    "tests/contract/test_storage.py": "fbab7454207da9d79876eaecca7eb51c0c7a94e3f1c5f7d326a75197cd127f87",
     "tests/property/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "tests/property/test_invariants.py": "f7eb7c113ebfbd0e5708d523b82e5714dd1c5a163406125bd5f3cca5540dc473",
+    "tests/property/test_invariants.py": "cb45fdb85cb1b786f1748981bd56ca249089dc692c38f35b4b23fe6e7bd8c7b4",
     "tests/unit/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "tests/unit/test_money.py": "25fa15fb9bb4b7eb791e9ef35608c6b42e720a65aa06e78c216f2b59439229d7",
+    "tests/unit/test_money.py": "a6b266a1bb0ebeff982b550c558cf2fb2cc7f4af3fa4e89c191239ecfd03b093",
     "tests/unit/test_performance.py": "6b53b95574594468fd2b9f2dbcc846fdababa207ce342557c9b0b377fad7848e"
   }
 }
