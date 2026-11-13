@@ -18,7 +18,7 @@
 | paid_by | str | member of group (AC-011) |
 | amount_paise | int | 1 … 100 000 000 (AC-010) |
 | split_type | str | `equal` \| `exact` \| `percent` |
-| shares | dict[str, int] | keys ⊆ members; Σ values == amount_paise (FR-004/005) |
+| shares_paise | dict[str, int] | keys ⊆ members (participants only); Σ values == amount_paise (FR-004/005) |
 | created_at | str | ISO-8601 UTC |
 
 ## Settlement
@@ -30,7 +30,7 @@
 | created_at | str | ISO-8601 UTC |
 
 ## Derived: Balance
-`balance(m) = Σ amount(e where paid_by=m) − Σ shares[m] + Σ settlements from m − Σ settlements to m`
+`balance(m) = Σ amount(e where paid_by=m) − Σ shares_paise[m] + Σ settlements from m − Σ settlements to m`
 Invariant: `Σ balance(m) == 0` for every group (AC-021).
 
 ## File layout
@@ -39,3 +39,7 @@ Invariant: `Σ balance(m) == 0` for every group (AC-021).
   "next_expense_id": 2, "expenses": [...], "settlements": [...], "created_at": "..."}}}
 ```
 Any deviation (missing key, wrong type, unknown version) ⇒ corrupt ⇒ exit 5 (AC-038).
+
+## Revision History
+- 2026-11-13: renamed Expense field `shares` → `shares_paise` while writing T009–T017 so the unit
+  is explicit in both the file and `--json` output (plan-level naming change; spec unaffected).

@@ -1,0 +1,10 @@
+{
+  "_source": "Constitution v1.0.0 - Measurable Engineering Constraints. Change only via constitution amendment.",
+  "lint_max_violations": 0,
+  "bandit_min_severity": "MEDIUM",
+  "bandit_max_findings": 0,
+  "tests_min_pass_rate": 1.0,
+  "tests_max_skipped": 0,
+  "coverage_min_percent": 90,
+  "require_every_ac_tested": true
+}
