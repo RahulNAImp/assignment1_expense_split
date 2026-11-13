@@ -1,4 +1,7 @@
-"""Generate narration audio per segment with the local Voicebox API (profile 'Rahul')."""
+"""Generate narration audio per scene with the local Voicebox API (profile 'Rahul').
+
+Usage: python voice.py [--script v2/script.md --out v2/build/audio] [scene ...]
+"""
 
 from __future__ import annotations
 
@@ -22,10 +25,18 @@ def req(method: str, path: str, body: dict | None = None) -> bytes:
         return resp.read()
 
 
+SCRIPT = HERE / "narration.md"
+
+
 def segments() -> dict[str, str]:
-    text = (HERE / "narration.md").read_text()
+    text = SCRIPT.read_text()
     parts = re.split(r"^## (\w+)\s*$", text, flags=re.M)
-    return {parts[i]: parts[i + 1].strip() for i in range(1, len(parts), 2)}
+    out = {}
+    for i in range(1, len(parts), 2):
+        body = parts[i + 1].split("\n# ")[0]
+        spoken = [ln for ln in body.splitlines() if ln.strip() and not ln.startswith(">")]
+        out[parts[i]] = " ".join(spoken).strip()
+    return out
 
 
 def main(names: list[str]) -> None:
@@ -50,4 +61,9 @@ def main(names: list[str]) -> None:
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    args = sys.argv[1:]
+    if args[:1] == ["--script"]:
+        SCRIPT = HERE / args[1]
+        OUT = HERE / args[3]
+        args = args[4:]
+    main(args)

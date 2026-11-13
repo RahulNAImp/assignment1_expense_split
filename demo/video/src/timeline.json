@@ -1,0 +1,69 @@
+{
+  "fps": 30,
+  "totalFrames": 5370,
+  "scenes": [
+    {
+      "id": "s01_title",
+      "kind": "card",
+      "tag": "",
+      "caption": "",
+      "audio": "audio/silence.wav",
+      "audioSec": 1,
+      "frames": 750
+    },
+    {
+      "id": "s02_workflow",
+      "kind": "card",
+      "tag": "",
+      "caption": "",
+      "audio": "audio/silence.wav",
+      "audioSec": 1,
+      "frames": 1050
+    },
+    {
+      "id": "s03_1a_spec",
+      "kind": "clip",
+      "tag": "PART 1A",
+      "caption": "Constitution gates and a spec-driven decision",
+      "audio": "audio/silence.wav",
+      "audioSec": 1,
+      "frames": 900,
+      "clip": "clips/s03_1a_spec.mp4",
+      "clipSec": 26.56,
+      "clipFrames": 795
+    },
+    {
+      "id": "s04_1a_demo",
+      "kind": "clip",
+      "tag": "PART 1A",
+      "caption": "SplitKaro running: exact paise, deterministic settle-up",
+      "audio": "audio/silence.wav",
+      "audioSec": 1,
+      "frames": 810,
+      "clip": "clips/s04_1a_demo.mp4",
+      "clipSec": 24.92,
+      "clipFrames": 746
+    },
+    {
+      "id": "s05_1a_harness",
+      "kind": "clip",
+      "tag": "PART 1A",
+      "caption": "Harness: 6 gates, a real failure, a real repair",
+      "audio": "audio/silence.wav",
+      "audioSec": 1,
+      "frames": 1200,
+      "clip": "clips/s05_1a_harness.mp4",
+      "clipSec": 37.48,
+      "clipFrames": 1123
+    },
+    {
+      "id": "s10_outro",
+      "kind": "card",
+      "tag": "",
+      "caption": "",
+      "audio": "audio/silence.wav",
+      "audioSec": 1,
+      "frames": 660
+    }
+  ]
+}

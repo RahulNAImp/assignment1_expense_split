@@ -65,6 +65,38 @@
 
 > run-003 was executed live while recording the demo video, on the same commit as run-002 (src unchanged).
 
+### run-004 — demo video v2 — **PASS**
+
+- Time (UTC): 2026-11-13T08:18:13Z
+- Git commit under test: `b2d9dc9`
+- Result file: `evidence/harness-results/run-004.json`
+
+| Gate | Result | Summary |
+|------|--------|---------|
+| G0 Integrity | ✅ PASS | 16 locked files; changed=0 missing=0 new_tests=0 |
+| G1 Lint & format | ✅ PASS | 0 lint violation(s), 0 file(s) need formatting |
+| G2 Security/SAST | ✅ PASS | 0 finding(s) >= MEDIUM (0 total incl. LOW) |
+| G3 Spec tests | ✅ PASS | 107/107 passed, 0 failed, 0 skipped |
+| G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
+| G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |
+
+### run-005 — demo video v2 — **PASS**
+
+- Time (UTC): 2026-11-13T08:41:01Z
+- Git commit under test: `b2d9dc9`
+- Result file: `evidence/harness-results/run-005.json`
+
+| Gate | Result | Summary |
+|------|--------|---------|
+| G0 Integrity | ✅ PASS | 16 locked files; changed=0 missing=0 new_tests=0 |
+| G1 Lint & format | ✅ PASS | 0 lint violation(s), 0 file(s) need formatting |
+| G2 Security/SAST | ✅ PASS | 0 finding(s) >= MEDIUM (0 total incl. LOW) |
+| G3 Spec tests | ✅ PASS | 107/107 passed, 0 failed, 0 skipped |
+| G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
+| G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |
+
+> run-004 and run-005 were executed live while recording demo video v2, on unchanged `src/` and tests (same result as run-002).
+
 ## 3. Failure → repair cycle (run-001 → run-002)
 
 **Failure evidence supplied to the coding agent:** `evidence/harness-results/run-001-feedback.md`

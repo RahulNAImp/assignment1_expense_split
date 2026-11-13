@@ -25,3 +25,9 @@ dist/
 
 # Demo video build output (large binaries; video is shared via Google Drive)
 demo/build/
+
+# Remotion project build artefacts (sources are committed; media is regenerated)
+demo/video/node_modules/
+demo/video/out/
+demo/video/public/
+demo/v2/build/
