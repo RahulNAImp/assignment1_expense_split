@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "txnsense/output.schema.json",
+  "title": "TxnSense ParseResult (spec SCH)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["intent", "transaction", "missing_fields", "risk", "summary", "confidence"],
+  "properties": {
+    "intent": {
+      "enum": ["transaction", "needs_review", "otp", "phishing", "promotional", "other", "invalid_input"]
+    },
+    "transaction": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["direction", "amount", "currency", "channel", "counterparty", "category",
+                       "account_last4", "txn_date", "reference_id", "available_balance"],
+          "properties": {
+            "direction": {"enum": ["debit", "credit"]},
+            "amount": {"type": "string", "pattern": "^(?!0+\\.00$)\\d{1,9}\\.\\d{2}$"},
+            "currency": {"const": "INR"},
+            "channel": {"enum": ["upi", "card", "netbanking", "neft_imps_rtgs", "atm", "other"]},
+            "counterparty": {"type": ["string", "null"], "maxLength": 60},
+            "category": {"enum": ["food", "groceries", "shopping", "travel", "bills_utilities", "fuel",
+                                   "entertainment", "health", "transfer", "salary_income", "refund",
+                                   "cash_withdrawal", "other"]},
+            "account_last4": {"type": ["string", "null"], "pattern": "^\\d{4}$"},
+            "txn_date": {"type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+            "reference_id": {"type": ["string", "null"], "maxLength": 40},
+            "available_balance": {"type": ["string", "null"], "pattern": "^\\d{1,9}\\.\\d{2}$"}
+          }
+        }
+      ]
+    },
+    "missing_fields": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"enum": ["amount", "direction", "model_output"]}
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "reasons"],
+      "properties": {
+        "level": {"enum": ["none", "low", "high"]},
+        "reasons": {"type": "array", "maxItems": 5, "items": {"type": "string", "maxLength": 120}}
+      }
+    },
+    "summary": {"type": "string", "minLength": 1, "maxLength": 160},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+  }
+}
