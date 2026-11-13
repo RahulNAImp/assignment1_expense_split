@@ -1,0 +1,13 @@
+line-length = 100
+target-version = "py311"
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[lint.per-file-ignores]
+"tests/**" = ["S101", "S603", "S607"]
+
+[lint.isort]
+# Pinned so import classification does not depend on whether src/ exists yet (Part 1A run-001 lesson).
+known-first-party = ["txnsense", "tests"]

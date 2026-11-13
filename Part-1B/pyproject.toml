@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "txnsense"
+version = "1.0.0"
+description = "Bank/UPI SMS transaction extractor with guardrails (BITS SEZG534 Assignment 1, Part 1B)"
+requires-python = ">=3.11"
+dependencies = ["google-genai>=1.0", "jsonschema>=4.20", "python-dotenv>=1.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "bandit>=1.7"]
+
+[project.scripts]
+txnsense = "txnsense.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
