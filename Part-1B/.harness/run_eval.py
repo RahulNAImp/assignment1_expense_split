@@ -144,13 +144,17 @@ def evaluate_case(case: dict, client: GeminiClient, judge: Judge | None) -> dict
     judge_score, judge_reason = None, "n/a"
     deterministic = out.get("intent") == "invalid_input"
     if judge and not schema_errs and not deterministic:
-        try:
-            time.sleep(PACE_S)
-            judge_score, judge_reason = judge.score(
-                case["input"]["text"], out, case.get("rubric_note")
-            )
-        except Exception as exc:  # judge unavailable -> renormalise (EV-02)
-            judge_reason = f"judge unavailable: {type(exc).__name__}: {str(exc)[:120]}"
+        # Judge service errors (5xx/429/timeouts) are retried like app calls (added after run-004,
+        # where 10/23 judge calls failed with 500/503 and were renormalised).
+        for wait in (0, *BACKOFF):
+            try:
+                time.sleep(PACE_S + wait)
+                judge_score, judge_reason = judge.score(
+                    case["input"]["text"], out, case.get("rubric_note")
+                )
+                break
+            except Exception as exc:  # judge unavailable -> renormalise (EV-02)
+                judge_reason = f"judge unavailable: {type(exc).__name__}: {str(exc)[:120]}"
 
     if schema_errs or violations:
         score = 0.0

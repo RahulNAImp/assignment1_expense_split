@@ -41,3 +41,6 @@
   holds, and it has a much larger free quota. It is slower (about 30 s per call). The
   thresholds, dataset, schema and scoring formula are unchanged. The harness now also reports
   `judge_coverage`.
+- 2026-11-13 (after run-004): judge calls are now retried with the same backoff as app calls
+  (5 s, 10 s, 20 s). In run-004, 10 of 23 judge calls failed with Gemma `500 INTERNAL` /
+  `503 UNAVAILABLE` and were renormalised. Scoring, thresholds and dataset are unchanged.
