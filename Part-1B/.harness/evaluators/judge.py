@@ -8,7 +8,9 @@ from __future__ import annotations
 import json
 import os
 
-JUDGE_MODEL = os.environ.get("TXNSENSE_JUDGE_MODEL", "gemini-3.5-flash")
+# Plan revision 2026-11-13: gemini-3.5-flash free tier = 20 requests/day (exhausted in run-003),
+# so the judge moved to gemma-4-31b-it (different model family from the app, larger free quota).
+JUDGE_MODEL = os.environ.get("TXNSENSE_JUDGE_MODEL", "gemma-4-31b-it")
 
 RUBRIC = """You grade the `summary` field produced by an SMS-parsing assistant.
 Score 1-5:
@@ -31,7 +33,7 @@ class Judge:
         self._client = genai.Client(
             api_key=os.environ["GEMINI_API_KEY"],
             http_options=types.HttpOptions(
-                timeout=45000, retry_options=types.HttpRetryOptions(attempts=1)
+                timeout=120000, retry_options=types.HttpRetryOptions(attempts=1)
             ),
         )
 

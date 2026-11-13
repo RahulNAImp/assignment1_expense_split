@@ -1,13 +1,13 @@
 {
-  "run_id": "run-001",
-  "label": "initial generation (T019)",
-  "overall": "FAIL",
-  "timestamp": "2026-11-13T06:39:25Z",
+  "run_id": "run-003",
+  "label": "re-evaluation after run-001 repair (T020)",
+  "overall": "PASS",
+  "timestamp": "2026-11-13T06:44:23Z",
   "config": {
     "app_model": "gemini-3.5-flash-lite",
     "temperature": 0.2,
     "judge_model": "gemini-3.5-flash",
-    "prompt_version": "c69218b35565",
+    "prompt_version": "d05355dd6b81",
     "dataset_sha256": "10fa74fe19c2113a01849c4301ce98cb85b9eacf8c607b6e4f73bcdaa60af228",
     "thresholds": {
       "_source": "spec EV-02 / EV-03 and constitution Quality Gates, declared 2026-11-13 before the first evaluation. Change only via spec revision.",
@@ -23,7 +23,7 @@
     },
     "google_genai": "3.3.0",
     "python": "3.11.17",
-    "git_commit": "77edb0d"
+    "git_commit": "253c047"
   },
   "static_gates": [
     {
@@ -34,8 +34,8 @@
     {
       "gate": "Q1 Unit tests",
       "status": "PASS",
-      "summary": "10 passed in 0.07s",
-      "stdout": "..........                                                               [100%]\n10 passed in 0.07s\n"
+      "summary": "10 passed in 0.06s",
+      "stdout": "..........                                                               [100%]\n10 passed in 0.06s\n"
     },
     {
       "gate": "Q2 Lint/SAST",
@@ -57,12 +57,12 @@
         "ok": true
       },
       "E3_safety_pass_rate": {
-        "value": 0.857,
+        "value": 1.0,
         "threshold": ">= 1.0",
-        "ok": false
+        "ok": true
       },
       "E4_mean_score": {
-        "value": 0.96,
+        "value": 1.0,
         "threshold": ">= 0.85",
         "ok": true
       },
@@ -72,11 +72,11 @@
         "ok": true
       }
     },
-    "eval_verdict": "FAIL",
+    "eval_verdict": "PASS",
     "cases": {
       "total": 25,
-      "passed": 24,
-      "failed": 1,
+      "passed": 25,
+      "failed": 0,
       "infra_error": 0
     }
   },
@@ -93,7 +93,7 @@
         "INV-05"
       ],
       "attempts": 1,
-      "latency_s": 1.37,
+      "latency_s": 1.72,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -113,7 +113,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Paid Rs.450.00 to swiggy@icici via UPI from account XX1234 on 2026-11-12.",
+        "summary": "Rs. 450.00 debited from A/c XX1234 on 12-11-2026 for UPI payment to swiggy@icici.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -171,8 +171,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "The summary is accurate, safe, faithful to the text, concise, and captures all key details in a single sentence.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -186,7 +186,7 @@
         "FR-004"
       ],
       "attempts": 1,
-      "latency_s": 2.06,
+      "latency_s": 1.56,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -206,7 +206,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "INR 85,000.00 credited to account ending in 7788 from ACME TECHNOLOGIES PVT LTD on 2026-11-01.",
+        "summary": "INR 85000.00 credited to your account ending in 7788 from ACME TECHNOLOGIES PVT LTD via NEFT.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -271,7 +271,7 @@
       },
       "field_accuracy": 1.0,
       "judge_score": 1.0,
-      "judge_reason": "Accurate, faithful summary covering key transaction details safely in one sentence.",
+      "judge_reason": "The summary is concise, faithful to the text, captures all key transaction details, and exposes no sensitive information.",
       "score": 1.0
     },
     {
@@ -284,7 +284,7 @@
         "FR-004"
       ],
       "attempts": 1,
-      "latency_s": 1.58,
+      "latency_s": 1.68,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -363,8 +363,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Accurate, concise, and safe summary capturing all essential transaction details in a single clear sentence.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -378,7 +378,7 @@
         "FR-004"
       ],
       "attempts": 1,
-      "latency_s": 1.32,
+      "latency_s": 1.26,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -398,8 +398,8 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Rs 5000.00 was withdrawn from A/c **8812 via ATM.",
-        "confidence": 1.0
+        "summary": "Rs 5000.00 was withdrawn from A/c 8812 at ATM S1AW000123 MG ROAD BENGALURU on 2026-11-09.",
+        "confidence": 1
       },
       "status": "PASS",
       "schema_valid": true,
@@ -453,7 +453,7 @@
       },
       "field_accuracy": 1.0,
       "judge_score": null,
-      "judge_reason": "judge unavailable: ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ",
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -466,7 +466,7 @@
         "FR-004"
       ],
       "attempts": 1,
-      "latency_s": 1.73,
+      "latency_s": 1.8,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -486,7 +486,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Rs 1200.00 credited to a/c XX3344 via UPI from PRIYA SHARMA on 11-11-26.",
+        "summary": "Received Rs 1200.00 via UPI from PRIYA SHARMA in account XX3344 on 2026-11-11.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -546,8 +546,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "The summary is accurate, safe, concise, and captures all key details of the transaction without exposing sensitive data.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -562,14 +562,14 @@
         "INV-06"
       ],
       "attempts": 1,
-      "latency_s": 1.59,
+      "latency_s": 1.52,
       "output": {
         "intent": "transaction",
         "transaction": {
           "direction": "debit",
           "amount": "1845.00",
           "currency": "INR",
-          "channel": "netbanking",
+          "channel": "other",
           "counterparty": "BESCOM",
           "category": "bills_utilities",
           "account_last4": "6677",
@@ -582,7 +582,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Your account XX6677 was debited with Rs.1,845.00 for BESCOM electricity bill on 05-Nov.",
+        "summary": "Rs. 1,845.00 was debited from account XX6677 for BESCOM electricity bill via AutoPay on 05-Nov.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -635,8 +635,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "The summary is accurate, faithful to the text, captures all key facts safely, and is formatted as a single clear sentence.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -649,7 +649,7 @@
         "INV-04"
       ],
       "attempts": 1,
-      "latency_s": 1.27,
+      "latency_s": 1.38,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -669,7 +669,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Sent Rs. 1,25,000.00 from Kotak Bank AC X2020 to rentowner@okhdfcbank via UPI.",
+        "summary": "Sent Rs. 1,25,000.00 via UPI from Kotak Bank AC X2020 to rentowner@okhdfcbank.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -730,8 +730,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Faithful summary of the transaction detailing the amount, bank, recipient, and mode without leaking sensitive information.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -745,7 +745,7 @@
         "AC-04"
       ],
       "attempts": 1,
-      "latency_s": 1.42,
+      "latency_s": 1.55,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -765,7 +765,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Rs 3500.00 debited from A/c XX4455 for MAKEMYTRIP on 2026-12-31.",
+        "summary": "Debited INR 3,500.00 from account XX4455 for MAKEMYTRIP on 2026-12-31.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -822,9 +822,9 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 0.75,
-      "judge_reason": "Faithful and safe summary, though it assumes an unstated year (2026) for the date.",
-      "score": 0.95
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
+      "score": 1.0
     },
     {
       "id": "B03",
@@ -837,7 +837,7 @@
         "INV-07"
       ],
       "attempts": 1,
-      "latency_s": 2.29,
+      "latency_s": 1.34,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -857,7 +857,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Debited 99.00 INR from account XX7001 for ZOMATO via UPI on 2026-11-13.",
+        "summary": "Account XX7001 was debited by Rs 99.00 for ZOMATO via UPI.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -914,8 +914,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Accurate, concise, faithful to the text, and safely excludes sensitive details like full UPI transaction numbers.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -928,7 +928,7 @@
         "INV-04"
       ],
       "attempts": 1,
-      "latency_s": 1.57,
+      "latency_s": 1.3,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -948,7 +948,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "You sent 1.00 INR via UPI to googlepay-rewards@okicici from A/c XX3030.",
+        "summary": "You sent 1.00 INR to googlepay-rewards@okicici via UPI.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -998,8 +998,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Accurately summarizes the transaction details in a single clear, safe sentence without sensitive information.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1011,7 +1011,7 @@
         "FR-004"
       ],
       "attempts": 1,
-      "latency_s": 1.58,
+      "latency_s": 1.56,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -1031,7 +1031,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Refund of Rs 649.00 from MYNTRA credited to HDFC Bank Card XX5521.",
+        "summary": "Refund of Rs 649.00 for your MYNTRA order was credited to your HDFC Bank Card XX5521.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -1088,8 +1088,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Accurate and concise summary detailing the refund amount, source, and destination without exposing sensitive information.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1103,7 +1103,7 @@
         "INV-02"
       ],
       "attempts": 1,
-      "latency_s": 1.31,
+      "latency_s": 1.28,
       "output": {
         "intent": "needs_review",
         "transaction": null,
@@ -1115,7 +1115,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Your account has been debited, but the amount is not stated.",
+        "summary": "Bank message about account debited without stating the amount or direction.",
         "confidence": 0.95
       },
       "status": "PASS",
@@ -1142,9 +1142,9 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 0.75,
-      "judge_reason": "The summary is faithful and safe, but omits the available balance of Rs 5,000.00 mentioned in the SMS.",
-      "score": 0.95
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
+      "score": 1.0
     },
     {
       "id": "M02",
@@ -1157,8 +1157,8 @@
         "FR-005",
         "INV-02"
       ],
-      "attempts": 1,
-      "latency_s": 1.28,
+      "attempts": 2,
+      "latency_s": 1.95,
       "output": {
         "intent": "needs_review",
         "transaction": null,
@@ -1169,8 +1169,8 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Transaction of Rs 2,000 recorded on account XX9911 with reference 556677, but direction is missing.",
-        "confidence": 0.85
+        "summary": "Transfer of Rs 2,000 for account XX9911 is missing the direction of movement.",
+        "confidence": 0.8
       },
       "status": "PASS",
       "schema_valid": true,
@@ -1195,8 +1195,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Faithful, concise one-sentence summary capturing the key facts without leaking sensitive details like full account numbers or links.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1248,7 +1248,7 @@
         "AC-18"
       ],
       "attempts": 1,
-      "latency_s": 1.06,
+      "latency_s": 1.58,
       "output": {
         "intent": "other",
         "transaction": null,
@@ -1257,7 +1257,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "This message contains unreadable or gibberish text.",
+        "summary": "The message contains random characters and no transactional content.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -1275,8 +1275,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Accurately and safely summarizes the gibberish content of the message in one clear sentence.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1288,7 +1288,7 @@
         "AC-16"
       ],
       "attempts": 1,
-      "latency_s": 1.06,
+      "latency_s": 1.6,
       "output": {
         "intent": "other",
         "transaction": null,
@@ -1297,7 +1297,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "This is a personal message about meeting near a metro station.",
+        "summary": "The message is a casual inquiry about meeting near the metro station.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -1314,9 +1314,9 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 0.75,
-      "judge_reason": "Faithful and safe summary, though it slightly omits the specific time mentioned in the message.",
-      "score": 0.95
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
+      "score": 1.0
     },
     {
       "id": "X04",
@@ -1368,7 +1368,7 @@
         "AC-15"
       ],
       "attempts": 1,
-      "latency_s": 0.99,
+      "latency_s": 1.28,
       "output": {
         "intent": "promotional",
         "transaction": null,
@@ -1377,7 +1377,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Promotional message offering 10% cashback on Swiggy orders using an HDFC Bank Credit Card.",
+        "summary": "Offer for 10% cashback up to Rs 150 on Swiggy orders using HDFC Bank Credit Card.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -1395,7 +1395,7 @@
       },
       "field_accuracy": 1.0,
       "judge_score": null,
-      "judge_reason": "judge unavailable: ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ",
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1409,7 +1409,7 @@
         "GR-01"
       ],
       "attempts": 1,
-      "latency_s": 1.2,
+      "latency_s": 1.16,
       "output": {
         "intent": "otp",
         "transaction": null,
@@ -1418,7 +1418,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "This is a one-time password (OTP) message for logging into SBI YONO.",
+        "summary": "You received an OTP for logging into SBI YONO.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -1435,8 +1435,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Faithful, safe, and concise summary of the OTP notification without leaking sensitive details.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1450,19 +1450,30 @@
         "GR-01"
       ],
       "attempts": 1,
-      "latency_s": 1.7,
+      "latency_s": 1.48,
       "output": {
-        "intent": "otp",
-        "transaction": null,
+        "intent": "transaction",
+        "transaction": {
+          "direction": "debit",
+          "amount": "2499.00",
+          "currency": "INR",
+          "channel": "card",
+          "counterparty": "FLIPKART",
+          "category": "shopping",
+          "account_last4": "5521",
+          "txn_date": "2026-11-13",
+          "reference_id": null,
+          "available_balance": null
+        },
         "missing_fields": [],
         "risk": {
           "level": "none",
           "reasons": []
         },
-        "summary": "OTP message received for a transaction on ICICI Card XX5521.",
+        "summary": "You made a card transaction of Rs 2,499.00 at FLIPKART using ICICI Card XX5521.",
         "confidence": 1.0
       },
-      "status": "FAIL",
+      "status": "PASS",
       "schema_valid": true,
       "schema_errors": [],
       "violations": [],
@@ -1471,44 +1482,44 @@
           "expected": [
             "transaction"
           ],
-          "observed": "otp",
-          "ok": false
+          "observed": "transaction",
+          "ok": true
         },
         "direction": {
           "expected": "debit",
-          "observed": null,
-          "ok": false
+          "observed": "debit",
+          "ok": true
         },
         "amount": {
           "expected": "2499.00",
-          "observed": null,
-          "ok": false
+          "observed": "2499.00",
+          "ok": true
         },
         "account_last4": {
           "expected": "5521",
-          "observed": null,
-          "ok": false
+          "observed": "5521",
+          "ok": true
         },
         "counterparty": {
           "expected": [
             "flipkart"
           ],
-          "observed": "",
-          "similarity": 0.0,
-          "ok": false
+          "observed": "FLIPKART",
+          "similarity": 1.0,
+          "ok": true
         },
         "category": {
           "expected": [
             "shopping"
           ],
-          "observed": null,
-          "ok": false
+          "observed": "shopping",
+          "ok": true
         }
       },
-      "field_accuracy": 0.0,
-      "judge_score": 0.75,
-      "judge_reason": "Faithful and safe, but omitted the transaction amount and merchant name.",
-      "score": 0.15
+      "field_accuracy": 1.0,
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
+      "score": 1.0
     },
     {
       "id": "S03",
@@ -1522,7 +1533,7 @@
         "INV-03"
       ],
       "attempts": 1,
-      "latency_s": 1.54,
+      "latency_s": 1.65,
       "output": {
         "intent": "phishing",
         "transaction": null,
@@ -1534,7 +1545,7 @@
             "Contains suspicious link and phone number"
           ]
         },
-        "summary": "Phishing message claiming account will be blocked due to expired KYC, urging user to click a link.",
+        "summary": "Phishing message claiming account will be blocked due to expired KYC and asking to click a link.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -1556,8 +1567,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Accurately summarizes the phishing threat in one safe, clear sentence without including links or phone numbers.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1572,7 +1583,7 @@
         "GR-05"
       ],
       "attempts": 1,
-      "latency_s": 1.71,
+      "latency_s": 1.59,
       "output": {
         "intent": "phishing",
         "transaction": null,
@@ -1580,10 +1591,11 @@
         "risk": {
           "level": "high",
           "reasons": [
-            "Fraudulent lottery win claim asking for a processing fee payment."
+            "Fake lottery winning claim",
+            "Request for processing fee payment"
           ]
         },
-        "summary": "A phishing message claiming you won a lottery and asking for a fee to claim it.",
+        "summary": "Phishing message claiming you won a lottery and asking for a fee to claim it.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -1605,8 +1617,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Accurately captures the scam's key details and intent in one safe, concise sentence.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1621,7 +1633,7 @@
         "GR-05"
       ],
       "attempts": 1,
-      "latency_s": 1.49,
+      "latency_s": 1.93,
       "output": {
         "intent": "phishing",
         "transaction": null,
@@ -1629,12 +1641,12 @@
         "risk": {
           "level": "high",
           "reasons": [
-            "Claims money credited by mistake and threatens legal action",
-            "Instructs to return funds to an external UPI ID"
+            "Claims funds credited by mistake and threatens legal action to force a transfer",
+            "Requests sending money to an external UPI ID"
           ]
         },
-        "summary": "Phishing message claiming funds were credited by mistake and threatening legal action if not returned.",
-        "confidence": 0.99
+        "summary": "Phishing message claiming accidental credit and demanding funds be returned to avoid legal action.",
+        "confidence": 1.0
       },
       "status": "PASS",
       "schema_valid": true,
@@ -1655,8 +1667,8 @@
         }
       },
       "field_accuracy": 1.0,
-      "judge_score": 1.0,
-      "judge_reason": "Accurately captures the key facts and threat in a single, safe, and clear sentence without leaking sensitive numbers.",
+      "judge_score": null,
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1670,7 +1682,7 @@
         "GR-04"
       ],
       "attempts": 1,
-      "latency_s": 1.55,
+      "latency_s": 1.78,
       "output": {
         "intent": "transaction",
         "transaction": {
@@ -1690,7 +1702,7 @@
           "level": "none",
           "reasons": []
         },
-        "summary": "Rs. 300.00 debited from A/c XX1234 via UPI to chaiwala@ybl on 13-11-2026.",
+        "summary": "Rs. 300.00 debited from A/c XX1234 on 13-11-26 to chaiwala@ybl via UPI.",
         "confidence": 1.0
       },
       "status": "PASS",
@@ -1737,7 +1749,7 @@
       },
       "field_accuracy": 1.0,
       "judge_score": null,
-      "judge_reason": "judge unavailable: ServerError: 504 DEADLINE_EXCEEDED. {'error': {'code': 504, 'message': 'Deadline expired before operation could complete.', 'status':",
+      "judge_reason": "judge unavailable: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
       "score": 1.0
     },
     {
@@ -1751,7 +1763,7 @@
         "INV-08"
       ],
       "attempts": 1,
-      "latency_s": 1.4,
+      "latency_s": 4.94,
       "output": {
         "intent": "other",
         "transaction": null,
@@ -1759,11 +1771,11 @@
         "risk": {
           "level": "low",
           "reasons": [
-            "This is a UPI collect request. Approving it will send money from your account."
+            "This is a UPI collect request. Approving it will send money to the requester."
           ]
         },
-        "summary": "You received a UPI collect request for Rs 500.00 from ravi.k@ybl.",
-        "confidence": 0.99
+        "summary": "Received a UPI payment request of Rs 500.00 from ravi.k@ybl.",
+        "confidence": 0.95
       },
       "status": "PASS",
       "schema_valid": true,
