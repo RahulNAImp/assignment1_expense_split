@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain: 3 open (AC-05 year inference, AC-09 OTP+txn, AC-14 collect request)
+- [x] No [NEEDS CLARIFICATION] markers remain (3 resolved in Clarifications session 2026-11-13)
 - [x] Requirements are testable and unambiguous: schema, invariants and guardrails are machine-checkable
 - [x] Success criteria are measurable (EV-03 thresholds declared before evaluation)
 - [x] Success criteria are technology-agnostic
