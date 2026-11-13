@@ -1,0 +1,99 @@
+{
+  "run_id": "run-008",
+  "label": "demo video v2",
+  "timestamp": "2026-11-13T10:44:43Z",
+  "git_commit": "320f92a",
+  "python": "3.11.17",
+  "thresholds": {
+    "_source": "Constitution v1.0.0 - Measurable Engineering Constraints. Change only via constitution amendment.",
+    "lint_max_violations": 0,
+    "bandit_min_severity": "MEDIUM",
+    "bandit_max_findings": 0,
+    "tests_min_pass_rate": 1.0,
+    "tests_max_skipped": 0,
+    "coverage_min_percent": 90,
+    "require_every_ac_tested": true
+  },
+  "overall": "PASS",
+  "gates": [
+    {
+      "gate": "G0 Integrity",
+      "status": "PASS",
+      "summary": "16 locked files; changed=0 missing=0 new_tests=0",
+      "details": {
+        "changed": [],
+        "missing": [],
+        "new_unlocked_tests": [],
+        "lock_reason": "re-lock after run-001: 3 blank lines added by ruff isort (I001) in test_storage/test_invariants/test_money; no assertion changed"
+      }
+    },
+    {
+      "gate": "G1 Lint & format",
+      "status": "PASS",
+      "summary": "0 lint violation(s), 0 file(s) need formatting",
+      "details": {
+        "violations": [],
+        "unformatted": []
+      },
+      "stdout": "23 files already formatted\n"
+    },
+    {
+      "gate": "G2 Security/SAST",
+      "status": "PASS",
+      "summary": "0 finding(s) >= MEDIUM (0 total incl. LOW)",
+      "details": {
+        "blocking": [],
+        "all": []
+      }
+    },
+    {
+      "gate": "G3 Spec tests",
+      "status": "PASS",
+      "summary": "107/107 passed, 0 failed, 0 skipped",
+      "details": {
+        "failures": []
+      },
+      "stdout": "........................................................................ [ 67%]\n...................................                                      [100%]\n================================ tests coverage ================================\n______________ coverage: platform darwin, python 3.11.17-final-0 _______________\n\nName                        Stmts   Miss  Cover   Missing\n---------------------------------------------------------\nsrc/splitkaro/__main__.py       2      2     0%   1-3\nsrc/splitkaro/cli.py          118      3    97%   103, 140-141\nsrc/splitkaro/service.py      148      4    97%   23, 69, 95, 112\nsrc/splitkaro/storage.py       58      4    93%   42, 87-89\n---------------------------------------------------------\nTOTAL                         406     13    97%\n\n4 files skipped due to complete coverage.\nCoverage JSON written to file /var/folders/nw/p3296l211xb_ww4x1c566dbw0000gn/T/tmpd3fh9sga/cov.json\n107 passed in 29.57s\n",
+      "stderr": ""
+    },
+    {
+      "gate": "G4 Coverage",
+      "status": "PASS",
+      "summary": "96.8% line coverage (threshold 90%)",
+      "details": {
+        "percent": 96.8,
+        "missing_lines": {
+          "src/splitkaro/__main__.py": [
+            1,
+            3
+          ],
+          "src/splitkaro/cli.py": [
+            103,
+            140,
+            141
+          ],
+          "src/splitkaro/service.py": [
+            23,
+            69,
+            95,
+            112
+          ],
+          "src/splitkaro/storage.py": [
+            42,
+            87,
+            88,
+            89
+          ]
+        }
+      }
+    },
+    {
+      "gate": "G5 Traceability",
+      "status": "PASS",
+      "summary": "40/40 acceptance criteria referenced by tests",
+      "details": {
+        "untested": []
+      }
+    }
+  ]
+}

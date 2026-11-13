@@ -1,12 +1,14 @@
 """Natural-sounding narration from the local Voicebox API (profile 'Rahul', chatterbox).
 
 Why per line: long-text generation is chunked by Voicebox and joined with a 50 ms crossfade,
-which removes breathing room. Here every script line is synthesised separately with a fixed seed
-(stable timbre), trimmed, faded, and joined with human-like pauses:
-  line ends with ","  -> short breath  0.26-0.38 s
-  line ends with "."  -> sentence gap  0.48-0.66 s
-  blank line          -> beat          0.85-1.10 s
-A very quiet room tone (-62 dB) runs under the whole scene so pauses don't sound digitally dead.
+which removes breathing room. Here every script line is synthesised separately (seed derived from
+the line, so intonation varies naturally between sentences), trimmed, faded, and joined using the
+speaker's OWN rhythm, measured from the Voicebox reference recording:
+  line ends with ","  -> 0.18-0.28 s
+  line ends with "."  -> 0.32-0.48 s (a real breath before ~35 % of new sentences)
+  blank line          -> 0.55-0.75 s + one of the speaker's real breaths
+Breaths are cut from the reference clip (build/breaths/). A faint room tone and a very short
+early reflection make it sound mic-recorded rather than synthesised.
 
 Usage: python demo/v2/voice_natural.py [scene ...]      (default: all scenes)
 Output: demo/v2/build/audio/<scene>.wav ; per-line cache in demo/v2/build/lines/
@@ -29,7 +31,8 @@ HERE = Path(__file__).parent
 SCRIPT = HERE / "script.md"
 OUT = HERE / "build" / "audio"
 LINES = HERE / "build" / "lines"
-SEED = 7
+SEED = 7  # base; per-line seed = SEED + hash(line) % 1000
+BREATHS = sorted((HERE / "build" / "breaths").glob("breath*.wav"))
 SR = 48000
 
 
@@ -67,13 +70,14 @@ def ff(*args: str) -> None:
 
 
 def synth(profile_id: str, line: str) -> Path:
-    key = hashlib.sha1(f"{SEED}|{line}".encode()).hexdigest()[:16]
+    seed = SEED + int(hashlib.sha1(line.encode()).hexdigest(), 16) % 1000
+    key = hashlib.sha1(f"{seed}|{line}".encode()).hexdigest()[:16]
     clean = LINES / f"{key}.wav"
     if clean.exists():
         return clean
     gen = json.loads(req("POST", "/generate", {
         "profile_id": profile_id, "text": line, "language": "en", "engine": "chatterbox",
-        "seed": SEED, "normalize": True}))
+        "seed": seed, "normalize": True}))
     gid = gen["id"]
     while True:
         st = json.loads(req("GET", f"/history/{gid}"))
@@ -94,17 +98,18 @@ def synth(profile_id: str, line: str) -> Path:
     return clean
 
 
-def pause_after(line: str | None, rng: random.Random) -> float:
+def pause_after(line: str | None, rng: random.Random) -> tuple[float, bool]:
+    """(silence seconds, insert a breath?)"""
     if line is None:
-        return rng.uniform(0.85, 1.10)
+        return rng.uniform(0.55, 0.75), True
     if line.endswith(","):
-        return rng.uniform(0.26, 0.38)
-    return rng.uniform(0.48, 0.66)
+        return rng.uniform(0.18, 0.28), False
+    return rng.uniform(0.32, 0.48), rng.random() < 0.35
 
 
 def build_scene(profile_id: str, name: str, items: list[str | None]) -> float:
     rng = random.Random(name)  # deterministic per scene
-    parts: list[tuple[str, float]] = []  # (file or 'silence', seconds)
+    parts: list[tuple[str, float, bool]] = []  # (file, gap seconds, breath?)
     for idx, item in enumerate(items):
         if item is None:
             continue
@@ -112,27 +117,38 @@ def build_scene(profile_id: str, name: str, items: list[str | None]) -> float:
         wav = synth(profile_id, item)
         print(f"   {name} [{idx + 1}/{len(items)}] {time.time() - t:4.0f}s  {item[:60]}", flush=True)
         nxt = items[idx + 1] if idx + 1 < len(items) else "END"
-        gap = 0.0 if nxt == "END" else pause_after(None if nxt is None else item, rng)
-        parts.append((str(wav), gap))
+        gap, breath = (0.0, False) if nxt == "END" else pause_after(None if nxt is None else item, rng)
+        parts.append((str(wav), gap, breath))
     # Build concat list with generated silences.
     sil_dir = HERE / "build" / "silence"
     sil_dir.mkdir(parents=True, exist_ok=True)
     lst = HERE / "build" / f"{name}.concat.txt"
     lines = []
-    for wav, gap in parts:
+    def silence(sec: float) -> str:
+        sil = sil_dir / f"{int(sec * 1000)}.wav"
+        if not sil.exists():
+            ff("-f", "lavfi", "-i", f"anullsrc=r={SR}:cl=mono", "-t", f"{sec:.3f}", str(sil))
+        return f"file '{sil}'"
+
+    for wav, gap, breath in parts:
         lines.append(f"file '{wav}'")
-        if gap > 0:
-            sil = sil_dir / f"{int(gap * 1000)}.wav"
-            if not sil.exists():
-                ff("-f", "lavfi", "-i", f"anullsrc=r={SR}:cl=mono", "-t", f"{gap:.3f}", str(sil))
-            lines.append(f"file '{sil}'")
+        if gap <= 0:
+            continue
+        if breath and BREATHS:
+            # silence, then the speaker's inhale right before the next phrase
+            lines.append(silence(max(0.12, gap - 0.3)))
+            lines.append(f"file '{rng.choice(BREATHS)}'")
+            lines.append(silence(0.06))
+        else:
+            lines.append(silence(gap))
     lst.write_text("\n".join(lines) + "\n")
     dry = HERE / "build" / f"{name}.dry.wav"
     ff("-f", "concat", "-safe", "0", "-i", str(lst), "-c:a", "pcm_s16le", str(dry))
     out = OUT / f"{name}.wav"
     # Faint room tone under the voice, then loudness-normalise for video (-16 LUFS).
     ff("-i", str(dry), "-f", "lavfi", "-i", f"anoisesrc=color=pink:r={SR}:a=0.0008",
-       "-filter_complex", "[0:a][1:a]amix=inputs=2:duration=first:normalize=0,"
+       "-filter_complex", "[0:a]aecho=0.85:0.4:14|23:0.10|0.06[v];"
+       "[v][1:a]amix=inputs=2:duration=first:normalize=0,"
        "loudnorm=I=-16:TP=-1.5:LRA=11,aformat=channel_layouts=stereo",
        "-ar", str(SR), str(out))
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",

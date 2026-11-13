@@ -95,7 +95,52 @@
 | G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
 | G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |
 
-> run-004 and run-005 were executed live while recording demo video v2, on unchanged `src/` and tests (same result as run-002).
+### run-006 — demo video v2 — **PASS**
+
+- Time (UTC): 2026-11-13T09:41:44Z
+- Git commit under test: `320f92a`
+- Result file: `evidence/harness-results/run-006.json`
+
+| Gate | Result | Summary |
+|------|--------|---------|
+| G0 Integrity | ✅ PASS | 16 locked files; changed=0 missing=0 new_tests=0 |
+| G1 Lint & format | ✅ PASS | 0 lint violation(s), 0 file(s) need formatting |
+| G2 Security/SAST | ✅ PASS | 0 finding(s) >= MEDIUM (0 total incl. LOW) |
+| G3 Spec tests | ✅ PASS | 107/107 passed, 0 failed, 0 skipped |
+| G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
+| G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |
+
+### run-007 — demo video v2 — **PASS**
+
+- Time (UTC): 2026-11-13T10:41:11Z
+- Git commit under test: `320f92a`
+- Result file: `evidence/harness-results/run-007.json`
+
+| Gate | Result | Summary |
+|------|--------|---------|
+| G0 Integrity | ✅ PASS | 16 locked files; changed=0 missing=0 new_tests=0 |
+| G1 Lint & format | ✅ PASS | 0 lint violation(s), 0 file(s) need formatting |
+| G2 Security/SAST | ✅ PASS | 0 finding(s) >= MEDIUM (0 total incl. LOW) |
+| G3 Spec tests | ✅ PASS | 107/107 passed, 0 failed, 0 skipped |
+| G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
+| G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |
+
+### run-008 — demo video v2 — **PASS**
+
+- Time (UTC): 2026-11-13T10:44:43Z
+- Git commit under test: `320f92a`
+- Result file: `evidence/harness-results/run-008.json`
+
+| Gate | Result | Summary |
+|------|--------|---------|
+| G0 Integrity | ✅ PASS | 16 locked files; changed=0 missing=0 new_tests=0 |
+| G1 Lint & format | ✅ PASS | 0 lint violation(s), 0 file(s) need formatting |
+| G2 Security/SAST | ✅ PASS | 0 finding(s) >= MEDIUM (0 total incl. LOW) |
+| G3 Spec tests | ✅ PASS | 107/107 passed, 0 failed, 0 skipped |
+| G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
+| G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |
+
+> run-003 to run-008 were executed live while recording the demo videos, on unchanged `src/` and tests (same result as run-002).
 
 ## 3. Failure → repair cycle (run-001 → run-002)
 

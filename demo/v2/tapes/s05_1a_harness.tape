@@ -6,22 +6,18 @@ Set Width 1920
 Set Height 1080
 Set Padding 40
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 18ms
+Set TypingSpeed 65ms
 Hide
 Type "cd Part-1A && source .venv/bin/activate && export PYTHONPATH=src PS1='$ ' PYTHONWARNINGS=ignore && clear" Enter
 Sleep 1s
 Show
-Type "# One command, six independent gates" Enter
+Type "# One command, six independent gates"
+Sleep 450ms
+Enter
 Sleep 300ms
-Type "python .harness/run_harness.py --label 'demo video v2'" Enter
+Type "python .harness/run_harness.py --label 'demo video v2'"
+Sleep 450ms
+Enter
 Sleep 1s
 Wait+Screen@120s /OVERALL/
-Sleep 7s
-Type "clear" Enter
-Sleep 300ms
-Type "# The first run failed for real. Feedback given to the coding agent:" Enter
-Sleep 300ms
-Type "sed -n '7,12p;16,17p;29p' evidence/harness-results/run-001-feedback.md" Enter
-Sleep 9s
-Type "git show --stat --format='%h %s' b489dd1 | head -9" Enter
-Sleep 9s
+Sleep 16s

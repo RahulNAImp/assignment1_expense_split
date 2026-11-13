@@ -6,16 +6,16 @@ Set Width 1920
 Set Height 1080
 Set Padding 40
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 18ms
+Set TypingSpeed 65ms
 Hide
 Type "cd Part-1B && source .venv/bin/activate && export PYTHONPATH=src PS1='$ ' PYTHONWARNINGS=ignore && clear" Enter
 Sleep 1s
 Show
-Type "python ../demo/show_eval.py run-001 run-006" Enter
-Sleep 16s
-Type "clear" Enter
+Type@1ms "# Final evaluation: 25 cases, 3 layers, thresholds fixed in the spec"
+Sleep 900ms
+Enter
 Sleep 300ms
-Type "sed -n '7,15p' evidence/runs/run-001/feedback.md" Enter
-Sleep 9s
-Type "git show 253c047 --format='%h %s' -- prompts/ | grep '^[+-] \|^253c047' | cut -c1-120" Enter
-Sleep 12s
+Type "python ../demo/show_eval.py run-006 --brief"
+Sleep 450ms
+Enter
+Sleep 22s

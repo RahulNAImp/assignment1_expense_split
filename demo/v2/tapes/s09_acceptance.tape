@@ -6,14 +6,16 @@ Set Width 1920
 Set Height 1080
 Set Padding 40
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 18ms
+Set TypingSpeed 65ms
 Hide
 Type "cd Part-1B && source .venv/bin/activate && export PYTHONPATH=src PS1='$ ' PYTHONWARNINGS=ignore && clear" Enter
 Sleep 1s
 Show
-Type "# Acceptance test on NEW data - run 1 vs run 2" Enter
+Type "# Acceptance test on NEW data (never seen by any test)"
+Sleep 450ms
+Enter
 Sleep 300ms
-Type "grep -A3 '^| Part' ../acceptance/RESULTS-run1-before-H06-fix.md; grep -A3 '^| Part' ../acceptance/RESULTS.md" Enter
-Sleep 10s
-Type "git show ec28b33 --format='%h %s' -- src/ | grep '^[+] \|^ec28b33' | cut -c1-110 | head -14" Enter
-Sleep 14s
+Type@1ms "sed -n '/^## Summary/,/^## Part 1A/p' ../acceptance/RESULTS.md | head -8"
+Sleep 900ms
+Enter
+Sleep 16s

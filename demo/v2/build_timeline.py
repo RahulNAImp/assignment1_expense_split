@@ -1,6 +1,6 @@
 """Measure narration + screen recordings and write demo/video/src/timeline.json for Remotion.
 
-Copies assets into demo/video/public/{audio,clips}. Scene length = max(voice + 1.2 s, clip).
+Copies assets into demo/video/public/{audio,clips}. Scene length = max(voice + 1.2 s, min(clip + 0.5 s, voice + 2.8 s)).
 """
 
 import json
@@ -17,11 +17,11 @@ SCENES = [
     ("s02_workflow", "card", "", ""),
     ("s03_1a_spec", "clip", "PART 1A", "Constitution gates and a spec-driven decision"),
     ("s04_1a_demo", "clip", "PART 1A", "SplitKaro running: exact paise, deterministic settle-up"),
-    ("s05_1a_harness", "clip", "PART 1A", "Harness: 6 gates, a real failure, a real repair"),
+    ("s05_1a_harness", "clip", "PART 1A", "One command, six independent gates: all PASS"),
     ("s06_1b_spec", "clip", "PART 1B", "Contract, guardrails and a threshold declared up front"),
     ("s07_1b_demo", "clip", "PART 1B", "TxnSense live on Gemini: normal, phishing, injection"),
-    ("s08_1b_harness", "clip", "PART 1B", "Evaluation harness: run-001 FAIL, repair, final PASS"),
-    ("s09_acceptance", "clip", "ACCEPTANCE", "New data: 10/11, diagnose H06, fix, 11/11"),
+    ("s08_1b_harness", "clip", "PART 1B", "Evaluation harness: 25 cases, final result PASS"),
+    ("s09_acceptance", "clip", "ACCEPTANCE", "Brand-new data: 16/16 and 11/11, zero leaks"),
     ("s10_outro", "card", "", ""),
 ]
 
@@ -49,7 +49,8 @@ def main() -> None:
             shutil.copy(clip, VIDEO / "public" / "clips" / clip.name)
             entry.update(clip=f"clips/{clip.name}", clipSec=round(v, 3),
                          clipFrames=int(v * FPS) - 1)
-            length = max(length, v + 0.5)
+            # Clip may run past the voice only by its static end-hold; cap at voice + 2.8 s.
+            length = max(length, min(v + 0.5, a + 2.8))
         entry["frames"] = int(round(length * FPS))
         scenes.append(entry)
         print(f"{sid:<16} voice {a:6.1f}s clip {entry.get('clipSec', 0):6.1f}s -> {length:6.1f}s")

@@ -6,20 +6,32 @@ Set Width 1920
 Set Height 1080
 Set Padding 40
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 18ms
+Set TypingSpeed 65ms
 Hide
 Type "cd Part-1A && source .venv/bin/activate && export PYTHONPATH=src PS1='$ ' PYTHONWARNINGS=ignore SPLITKARO_DATA=/tmp/v2-demo.json && rm -f /tmp/v2-demo.json && clear" Enter
 Sleep 1s
 Show
-Type "splitkaro group create goa --members ravi,asha,meera" Enter
+Type "splitkaro group create goa --members ravi,asha,meera"
+Sleep 450ms
+Enter
 Sleep 1.5s
-Type "splitkaro expense add goa --paid-by ravi --amount 900 --desc Dinner" Enter
+Type@1ms "splitkaro expense add goa --paid-by ravi --amount 900 --desc Dinner"
+Sleep 900ms
+Enter
 Sleep 1.2s
-Type "splitkaro expense add goa --paid-by asha --amount 100.00 --desc Snacks" Enter
+Type@1ms "splitkaro expense add goa --paid-by asha --amount 100.00 --desc Snacks"
+Sleep 900ms
+Enter
 Sleep 1.5s
-Type "splitkaro balances goa" Enter
+Type "splitkaro balances goa"
+Sleep 450ms
+Enter
 Sleep 4s
-Type "splitkaro settle goa" Enter
+Type "splitkaro settle goa"
+Sleep 450ms
+Enter
 Sleep 4s
-Type `splitkaro pay goa --from meera --to ravi --amount 999; echo "exit code: $?"` Enter
+Type@1ms `splitkaro pay goa --from meera --to ravi --amount 999; echo "exit code: $?"`
+Sleep 900ms
+Enter
 Sleep 7s

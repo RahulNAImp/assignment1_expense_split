@@ -6,18 +6,28 @@ Set Width 1920
 Set Height 1080
 Set Padding 40
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 18ms
+Set TypingSpeed 65ms
 Hide
 Type "cd Part-1A && source .venv/bin/activate && export PYTHONPATH=src PS1='$ ' PYTHONWARNINGS=ignore && clear" Enter
 Sleep 1s
 Show
-Type "# Part 1A - SplitKaro: constitution quality gates" Enter
+Type "# Part 1A - SplitKaro: constitution quality gates"
+Sleep 450ms
+Enter
 Sleep 500ms
-Type "sed -n '/^| Gate/,/^$/p' .specify/memory/constitution.md" Enter
+Type "sed -n '/^| Gate/,/^$/p' .specify/memory/constitution.md"
+Sleep 450ms
+Enter
 Sleep 7s
-Type "# Clarification decided by the student -> acceptance criterion AC-008" Enter
+Type@1ms "# Clarification decided by the student -> acceptance criterion AC-008"
+Sleep 900ms
+Enter
 Sleep 500ms
-Type "grep -n -A1 'leftover paise' specs/001-group-expense-splitter/spec.md | head -4" Enter
+Type@1ms "grep -n -A1 'leftover paise' specs/001-group-expense-splitter/spec.md | head -4"
+Sleep 900ms
+Enter
 Sleep 5s
-Type "grep -n -A3 'AC-008' specs/001-group-expense-splitter/spec.md | head -6" Enter
+Type@1ms "grep -n -A3 'AC-008' specs/001-group-expense-splitter/spec.md | head -6"
+Sleep 900ms
+Enter
 Sleep 9s

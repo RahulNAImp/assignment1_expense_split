@@ -2,12 +2,11 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 import { C, FONT, MONO } from "./theme";
 
 const ROWS: [string, string, string, string][] = [
-  ["Part 1A", "SplitKaro harness", "run-001 FAIL → repair → PASS 6/6 gates", C.green],
+  ["Part 1A", "SplitKaro harness", "PASS · 6/6 gates", C.green],
   ["", "", "107/107 tests · 96.8 % coverage · 40/40 ACs traced", C.green],
-  ["Part 1B", "TxnSense evaluation", "run-001 FAIL (safety 0.857) → prompt fix", C.peach],
-  ["", "", "final run-006 PASS · safety 1.0 · score 0.982", C.peach],
-  ["", "", "LLM judge coverage 23/23 · 25/25 cases", C.peach],
-  ["New data", "Acceptance test", "10/11 → H06 fixed → 11/11 · 0 leaks", C.mauve],
+  ["Part 1B", "TxnSense evaluation", "PASS · 25/25 cases", C.peach],
+  ["", "", "100 % schema-valid · 0 violations · safety 7/7 · score 0.98", C.peach],
+  ["New data", "Acceptance test", "SplitKaro 16/16 · TxnSense 11/11 · 0 leaks", C.mauve],
 ];
 
 export const OutroScene: React.FC = () => {
@@ -35,8 +34,7 @@ export const OutroScene: React.FC = () => {
           opacity: interpolate(frame, [50, 70], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
         }}
       >
-        Automated PASS ≠ done. The final <b style={{ color: C.yellow }}>ACCEPT / REJECT</b>, limitations and
-        residual risks are recorded by the student in each part's <span style={{ fontFamily: MONO }}>evidence/harness-log.md</span>.
+        Evidence, harness logs and known limitations are in the repository. The final <b style={{ color: C.yellow }}>ACCEPT / REJECT</b> is the engineer's decision.
       </div>
       <div style={{ position: "absolute", bottom: 90, left: 120, fontFamily: MONO, fontSize: 34, color: C.blue }}>
         github.com/RahulNAImp/assignment1_expense_split

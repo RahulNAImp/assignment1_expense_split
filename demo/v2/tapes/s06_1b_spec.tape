@@ -6,18 +6,28 @@ Set Width 1920
 Set Height 1080
 Set Padding 40
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 18ms
+Set TypingSpeed 65ms
 Hide
 Type "cd Part-1B && source .venv/bin/activate && export PYTHONPATH=src PS1='$ ' PYTHONWARNINGS=ignore && clear" Enter
 Sleep 1s
 Show
-Type "# Part 1B - TxnSense: the output contract and guardrails come from the spec" Enter
+Type@1ms "# Part 1B - TxnSense: the output contract and guardrails come from the spec"
+Sleep 900ms
+Enter
 Sleep 300ms
-Type "grep -n '^- \*\*GR-0' specs/001-sms-transaction-extractor/spec.md | cut -c1-140" Enter
+Type@1ms "grep -n '^- \*\*GR-0' specs/001-sms-transaction-extractor/spec.md | cut -c1-140"
+Sleep 900ms
+Enter
 Sleep 11s
-Type "# Threshold declared before the first evaluation (EV-03)" Enter
+Type "# Threshold declared before the first evaluation (EV-03)"
+Sleep 450ms
+Enter
 Sleep 300ms
-Type "cat .harness/thresholds.json" Enter
+Type "cat .harness/thresholds.json"
+Sleep 450ms
+Enter
 Sleep 9s
-Type `grep -c '"id"' evals/dataset.json` Enter
+Type `grep -c '"id"' evals/dataset.json`
+Sleep 450ms
+Enter
 Sleep 5s

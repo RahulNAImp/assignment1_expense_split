@@ -1,69 +1,117 @@
 {
   "fps": 30,
-  "totalFrames": 5370,
+  "totalFrames": 7680,
   "scenes": [
     {
       "id": "s01_title",
       "kind": "card",
       "tag": "",
       "caption": "",
-      "audio": "audio/silence.wav",
-      "audioSec": 1,
-      "frames": 750
+      "audio": "audio/s01_title.wav",
+      "audioSec": 30.783,
+      "frames": 959
     },
     {
       "id": "s02_workflow",
       "kind": "card",
       "tag": "",
       "caption": "",
-      "audio": "audio/silence.wav",
-      "audioSec": 1,
-      "frames": 1050
+      "audio": "audio/s02_workflow.wav",
+      "audioSec": 30.295,
+      "frames": 945
     },
     {
       "id": "s03_1a_spec",
       "kind": "clip",
       "tag": "PART 1A",
       "caption": "Constitution gates and a spec-driven decision",
-      "audio": "audio/silence.wav",
-      "audioSec": 1,
-      "frames": 900,
+      "audio": "audio/s03_1a_spec.wav",
+      "audioSec": 23.917,
       "clip": "clips/s03_1a_spec.mp4",
-      "clipSec": 26.56,
-      "clipFrames": 795
+      "clipSec": 33.28,
+      "clipFrames": 997,
+      "frames": 802
     },
     {
       "id": "s04_1a_demo",
       "kind": "clip",
       "tag": "PART 1A",
       "caption": "SplitKaro running: exact paise, deterministic settle-up",
-      "audio": "audio/silence.wav",
-      "audioSec": 1,
-      "frames": 810,
+      "audio": "audio/s04_1a_demo.wav",
+      "audioSec": 21.817,
       "clip": "clips/s04_1a_demo.mp4",
-      "clipSec": 24.92,
-      "clipFrames": 746
+      "clipSec": 30.36,
+      "clipFrames": 909,
+      "frames": 739
     },
     {
       "id": "s05_1a_harness",
       "kind": "clip",
       "tag": "PART 1A",
-      "caption": "Harness: 6 gates, a real failure, a real repair",
-      "audio": "audio/silence.wav",
-      "audioSec": 1,
-      "frames": 1200,
+      "caption": "One command, six independent gates: all PASS",
+      "audio": "audio/s05_1a_harness.wav",
+      "audioSec": 18.953,
       "clip": "clips/s05_1a_harness.mp4",
-      "clipSec": 37.48,
-      "clipFrames": 1123
+      "clipSec": 24.6,
+      "clipFrames": 737,
+      "frames": 653
+    },
+    {
+      "id": "s06_1b_spec",
+      "kind": "clip",
+      "tag": "PART 1B",
+      "caption": "Contract, guardrails and a threshold declared up front",
+      "audio": "audio/s06_1b_spec.wav",
+      "audioSec": 34.713,
+      "clip": "clips/s06_1b_spec.mp4",
+      "clipSec": 36.04,
+      "clipFrames": 1080,
+      "frames": 1096
+    },
+    {
+      "id": "s07_1b_demo",
+      "kind": "clip",
+      "tag": "PART 1B",
+      "caption": "TxnSense live on Gemini: normal, phishing, injection",
+      "audio": "audio/s07_1b_demo.wav",
+      "audioSec": 23.43,
+      "clip": "clips/s07_1b_demo.mp4",
+      "clipSec": 31.08,
+      "clipFrames": 931,
+      "frames": 787
+    },
+    {
+      "id": "s08_1b_harness",
+      "kind": "clip",
+      "tag": "PART 1B",
+      "caption": "Evaluation harness: 25 cases, final result PASS",
+      "audio": "audio/s08_1b_harness.wav",
+      "audioSec": 20.673,
+      "clip": "clips/s08_1b_harness.mp4",
+      "clipSec": 26.16,
+      "clipFrames": 783,
+      "frames": 704
+    },
+    {
+      "id": "s09_acceptance",
+      "kind": "clip",
+      "tag": "ACCEPTANCE",
+      "caption": "Brand-new data: 16/16 and 11/11, zero leaks",
+      "audio": "audio/s09_acceptance.wav",
+      "audioSec": 14.533,
+      "clip": "clips/s09_acceptance.mp4",
+      "clipSec": 20.96,
+      "clipFrames": 627,
+      "frames": 520
     },
     {
       "id": "s10_outro",
       "kind": "card",
       "tag": "",
       "caption": "",
-      "audio": "audio/silence.wav",
-      "audioSec": 1,
-      "frames": 660
+      "audio": "audio/s10_outro.wav",
+      "audioSec": 14.623,
+      "frames": 475
     }
   ]
 }
