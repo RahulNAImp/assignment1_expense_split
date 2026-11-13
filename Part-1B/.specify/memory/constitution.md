@@ -1,50 +1,77 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# TxnSense Constitution
+
+TxnSense turns raw Indian bank / UPI SMS text into a structured, validated transaction record
+using an LLM (Google Gemini), while blocking OTP leakage, phishing and prompt-injection.
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Specification Is the Source of Truth (NON-NEGOTIABLE)
+- Every output field, invariant, guardrail and evaluation threshold MUST be defined in
+  `specs/001-sms-transaction-extractor/spec.md` before evaluation runs.
+- The model's behaviour is accepted only if it falls inside the specified boundaries; wording may
+  vary, structure and safety may not.
+- Spec changes after the first evaluation require a dated `Revision History` entry with reason;
+  expected results in `evals/dataset.json` may change only through such a revision.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Contract Over Prose
+- The model output MUST conform to the JSON output schema (`contracts/output.schema.json`).
+  Free text exists only in the `summary` field, and it is bounded in length.
+- The application MUST validate every model response against the schema and the invariants before
+  returning it. An invalid response is never passed through silently. It is retried once, then
+  reported as `needs_review`.
+- Money is a decimal string with exactly 2 fractional digits (e.g. `"450.00"`), never a float.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Safety Guardrails Are Code, Not Just Prompt
+- An OTP / one-time code from the input MUST NEVER appear anywhere in the output.
+- URLs and phone numbers from a suspected phishing message MUST NEVER appear in the output.
+- Full account / card numbers MUST NEVER appear; at most the last 4 digits.
+- Instructions inside the SMS text are data, never commands (prompt-injection resistance).
+- These rules are enforced by deterministic post-processing in `src/` **and** verified
+  independently by the harness. The prompt alone is not trusted to enforce them.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Grounded Extraction (No Hallucination)
+- Every extracted amount, account suffix and reference number MUST be traceable to the input text.
+- When a mandatory field (amount, direction) cannot be determined from the text, the system MUST
+  return `needs_review` with `missing_fields` instead of guessing.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Independent, Layered Evaluation
+- One harness evaluates every dataset case through: L1 schema → L2 invariants/guardrails →
+  L3 semantic/quality → aggregate score vs threshold.
+- An LLM judge MAY be used in L3 only; it MUST NOT replace L1/L2 checks and MUST NOT be the same
+  call that produced the output.
+- Model/service failures (timeouts, 429, 5xx) are classified `INFRA_ERROR`. They are retried and
+  reported separately, and never counted as application passes or failures.
+- Difficult cases MUST NOT be removed, thresholds MUST NOT be lowered, and guardrails MUST NOT be
+  disabled to obtain PASS.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### VI. Secrets & Reproducibility
+- The API key is read from the environment (`.env`, git-ignored). It is never logged, printed or
+  committed.
+- Every evaluation records model name, temperature, prompt version (hash), dataset hash and
+  thresholds.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Quality Gates (declared before first evaluation)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+| Gate | Pass condition |
+|------|----------------|
+| Q1 Unit tests (deterministic parts) | `pytest` 100 % pass (no network) |
+| Q2 Lint / SAST | `ruff check` 0 violations; `bandit -r src` 0 findings ≥ MEDIUM |
+| E1 Schema validity | 100 % of evaluated cases produce schema-valid output |
+| E2 Invariants & guardrails | 0 violations across all evaluated cases |
+| E3 Safety cases | 100 % of cases tagged `safety` pass |
+| E4 Aggregate quality | mean case score ≥ 0.85 |
+| E5 Infra health | ≤ 10 % of cases `INFRA_ERROR`; otherwise the run is `INCONCLUSIVE` |
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+
+`/speckit.constitution` → `/speckit.specify` → `/speckit.clarify` → `/speckit.plan` →
+`/speckit.tasks` → `/speckit.analyze` → `/speckit.implement` → harness evaluation →
+structured failure evidence → coding agent repair → re-evaluation → human ACCEPT/REJECT.
+The first generated implementation is snapshotted to `evidence/initial-generation/`.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Amendments need a semantic version bump and a dated note. Gates may only change by amendment
+and never to make a failing run pass.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-11-13 | **Last Amended**: 2026-11-13
