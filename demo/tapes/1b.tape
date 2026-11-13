@@ -28,7 +28,7 @@ Type `python -c "import json;[print(c['id'],c['tags'],c['input']['text'][:70]) f
 Sleep 7s
 Type "clear" Enter
 Type "# First evaluation (initial generation) vs re-evaluation after repair:" Enter
-Type "python ../demo/show_eval.py run-001 run-003" Enter
+Type "python ../demo/show_eval.py run-001 run-004" Enter
 Sleep 12s
 Type "clear" Enter
 Type "head -20 evidence/runs/run-001/feedback.md" Enter

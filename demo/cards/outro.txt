@@ -1,0 +1,18 @@
+
+
+
+      Results
+
+      Part 1A  SplitKaro
+        run-001  FAIL   import error (hidden .pth) + I001 lint in 3 tests
+        run-002  PASS   6/6 gates · 107/107 tests · 96.8% coverage · 40/40 ACs traced
+
+      Part 1B  TxnSense
+        run-001  FAIL   E3 safety 0.857: OTP + amount + merchant SMS labelled 'otp'
+        repair   prompt precedence rule (spec AC-09); dataset/thresholds untouched
+        final    PASS   see Part-1B/evidence/harness-log.md
+
+      Final ACCEPT / REJECT, limitations and residual risks:
+      recorded by the student in each part's evidence/harness-log.md
+
+      Thank you

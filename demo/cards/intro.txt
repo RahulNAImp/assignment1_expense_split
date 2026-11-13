@@ -1,0 +1,17 @@
+
+
+
+      AI-Augmented SDLC (SE ZG534)  ·  Assignment 1
+      Spec-Driven Development & Harness Engineering
+
+      Rahul Rangnath Nandanwar  ·  2026NS93095
+      BITS Pilani WILP  ·  S1 2026
+
+
+      Part 1A   SplitKaro   deterministic group expense splitter (CLI)
+      Part 1B   TxnSense    Gemini-powered bank/UPI SMS parser with guardrails
+
+      Workflow  constitution → specify → clarify → plan → tasks → analyze → implement
+                → harness → feedback → repair → re-run → human decision
+
+      github.com/RahulNAImp/assignment1_expense_split

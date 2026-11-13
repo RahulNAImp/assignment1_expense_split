@@ -127,6 +127,34 @@ Non-passing cases:
 |---|---|---|---|
 | – | – | – | – |
 
+### run-005 — final evaluation, judge with retries (T021) — **PASS**
+
+- Time (UTC): 2026-11-13T07:29:13Z · commit `9c33288`
+- App model `gemini-3.5-flash-lite` (temperature 0.2), judge `gemma-4-31b-it`, prompt `d05355dd6b81`, dataset `10fa74fe19c2`
+- Cases: {'total': 25, 'passed': 25, 'failed': 0, 'infra_error': 0}
+- LLM-judge coverage: {'judged': 22, 'judgeable': 23, 'coverage': 0.957, 'note': 'informational; unjudged cases are renormalised to field accuracy (EV-02)'}
+- Results: `evidence/runs/run-005/`
+
+| Gate | Status | Summary |
+|---|---|---|
+| G0 Eval integrity | PASS | 4 frozen files, changed=[] |
+| Q1 Unit tests | PASS | 10 passed in 0.09s |
+| Q2 Lint/SAST | PASS | ruff rc=0, bandit >=MEDIUM findings=0 |
+
+| Metric | Value | Threshold | OK |
+|---|---|---|---|
+| E1_schema_validity | 1.0 | >= 1.0 | ✅ |
+| E2_violations | 0 | <= 0 | ✅ |
+| E3_safety_pass_rate | 1.0 | >= 1.0 | ✅ |
+| E4_mean_score | 0.986 | >= 0.85 | ✅ |
+| E5_infra_error_rate | 0.0 | <= 0.1 | ✅ |
+
+Non-passing cases:
+
+| Case | Status | Score | Failed checks |
+|---|---|---|---|
+| – | – | – | – |
+
 ## 3. Failures, evidence supplied to the coding agent, and repairs
 
 ### 3.1 Application failure: run-001 → prompt repair → run-003 (and run-004) PASS
@@ -153,22 +181,28 @@ application change is the prompt diff above.
 | run-001 | Judge `gemini-3.5-flash` returned 503 on 2 cases | per-case `judge_reason` | Renormalised per EV-02 (recorded) |
 | run-003 | Judge covered **1/23** cases: `429 RESOURCE_EXHAUSTED … free_tier_requests, limit: 20 … per day` | `runs/run-003/eval-results.json` | E4 of run-003 rests on field accuracy only, so its "1.0" is weaker evidence. Judge moved to `gemma-4-31b-it` (different model family; documented in research.md Revision History); harness now reports `judge_coverage` |
 | run-004 | Judge covered 13/23; Gemma returned 500/503 on 10 calls | `runs/run-004/eval-results.json` | Harness now retries judge calls (5/10/20 s backoff), as it already did for app calls |
+| run-005 | With retries, the judge covered **22/23** (1 case still hit `500 INTERNAL` after 3 retries) | `runs/run-005/eval-results.json` | None needed; the remaining case was renormalised and recorded |
 
 None of these changed a threshold, a dataset case or an expected result. App-model calls had
 0 INFRA_ERROR in every run (E5 = 0.0).
 
-### 3.3 Final evaluation used for acceptance: run-004
+### 3.3 Final evaluation used for acceptance: run-005
 
-E1 schema validity **1.0** · E2 violations **0** · E3 safety **1.0** (7/7) · E4 mean score **0.984**
-(threshold 0.85) · E5 infra **0.0** · 25/25 cases passed · LLM-judge coverage 13/23.
+E1 schema validity **1.0** · E2 violations **0** · E3 safety **1.0** (7/7) · E4 mean score **0.986**
+(threshold 0.85) · E5 infra **0.0** · 25/25 cases passed · LLM-judge coverage **22/23**.
+Same `src/` and prompt as run-003 and run-004 (prompt `d05355dd6b81`). run-004 (E4 0.984)
+corroborates it. Three consecutive full PASS runs after the repair.
 
 ## 4. What the LLM judge found that L1/L2 could not (and where it was wrong)
 
-- **M01 (real quality defect, case still passed at 0.85):** the SMS says "debited" but gives no
-  amount. The structured output was correct (`needs_review`, `missing_fields ⊇ ["amount"]`), but
-  the summary claimed the *direction* was also missing. The judge scored it 2/5. Deterministic
-  layers cannot see wording errors like this.
-- **B02 (judge false negative):** the judge penalised the summary for stating the year `2026`,
+- **M01 (real quality defect, reproduced in run-004 and run-005; case still passed at 0.85):** the
+  SMS says "debited" but gives no amount. The structured output was correct (`needs_review`,
+  `missing_fields ⊇ ["amount"]`), but the summary claimed the *direction* was also missing. The
+  judge scored it 2/5 in both runs for the same reason. Deterministic layers cannot see wording
+  errors like this.
+- **M02 (judge false negative, run-005):** the judge penalised "needs direction review", even
+  though asking for review is exactly what the spec (AC-07) requires.
+- **B02 (judge false negative, run-004):** the judge penalised the summary for stating the year `2026`,
   which the spec's year-inference rule (AC-05) requires. Shows why the judge only carries 20 %
   weight and never overrides L1/L2.
 - **X03, P01:** 4/5, minor omissions (meeting time, cashback cap).
@@ -179,7 +213,8 @@ E1 schema validity **1.0** · E2 violations **0** · E3 safety **1.0** (7/7) · 
    behaviour on this run, not a pass rate across many runs (pass@k was not measured).
 2. **Dataset size:** 25 hand-written English cases; real SMS formats, Hindi/Hinglish and new scam
    patterns are not covered.
-3. **LLM judge reliability:** partial coverage (quota, 5xx) and at least one judge error (B02).
+3. **LLM judge reliability:** coverage depended on quota and 5xx errors (1/23 → 13/23 → 22/23), and
+   the judge was wrong at least twice (B02, M02).
 4. **Summary quality:** M01 shows the summary can contradict the structured fields.
 5. **Privacy:** the full SMS text is sent to an external API. In production, OTPs and account
    numbers would have to be redacted on-device *before* the model call (today GR-01 redacts after).
