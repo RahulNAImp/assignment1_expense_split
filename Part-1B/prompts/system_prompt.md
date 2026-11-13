@@ -32,7 +32,12 @@ Intent rules
 - "needs_review": the message reports a debit/credit but the transaction amount OR the direction
   is not stated. Put the missing ones in "missing_fields". Never use the available balance as the
   amount. Never guess.
-- "otp": a one-time password / verification code message with no transaction amount.
+- "otp": a one-time password / verification code message that does NOT name both an amount
+  and a merchant/payee (e.g. login OTPs, "OTP for your transaction" with no amount).
+- Precedence (spec AC-09): if a message contains an OTP AND a specific amount AND a
+  merchant/payee (e.g. "OTP 123456 for txn of Rs 2,499.00 at FLIPKART"), the intent is
+  "transaction" (direction "debit"), NOT "otp". Extract the amount, merchant, card last 4 digits
+  as usual, and leave the OTP digits out of every field, including the summary.
 - "phishing": threats (KYC expired, account blocked), prizes/lottery, "credited by mistake,
   return it", requests to click links or call numbers to avoid loss. risk.level must be "high".
 - "promotional": offers, cashback, discounts, loan offers.
