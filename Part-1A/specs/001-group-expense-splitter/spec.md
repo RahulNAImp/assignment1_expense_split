@@ -12,6 +12,18 @@ by exact amounts, or by percentage), see each member's net balance, and get a sh
 payments that settles everyone up. Money must be exact to the paisa and every result must be
 deterministic so it can be verified with exact tests."
 
+## Clarifications
+
+### Session 2026-11-13
+
+- Q: When an equal or percentage split leaves leftover paise, who receives them? → A: One paisa
+  each to the participating members in alphabetical order, independent of the payer. Applied to
+  AC-008, AC-018, FR-004.
+- Q: May a recorded payment exceed what the sender owes or the receiver is owed? → A: No. Reject
+  with exit 4 and `payment exceeds outstanding balance`. Applied to AC-032, FR-009.
+- Q: May an expense be deleted after any settlement has been recorded in the group? → A: No.
+  Reject with exit 4 and `cannot delete expense after settlements`. Applied to AC-035, FR-010.
+
 ## User Scenarios & Testing *(mandatory)*
 
 Reference group used in the scenarios below (unless stated otherwise): group `goa` with members
@@ -62,9 +74,10 @@ A member pays for something shared and the cost is divided equally.
    created, split defaults to `equal` among all members, each share is `300.00`, exit `0`, stdout
    `Added expense 1 (900.00) to goa`.
 2. **AC-008** **Given** an equal split that does not divide exactly, e.g. `--amount 100.00` paid by
-   `ravi` among all 3 members, **Then** shares are allocated by the remainder rule:
-   [NEEDS CLARIFICATION: who receives the leftover paise — the members in alphabetical order, or
-   the payer?]. In all cases the shares sum to exactly `100.00`.
+   `ravi` among all 3 members, **Then** every share is first rounded down to the paisa
+   (`33.33`) and the leftover paise are given one each to participants in alphabetical order:
+   asha `33.34`, meera `33.33`, ravi `33.33` (the payer gets no special treatment). Shares sum to
+   exactly `100.00`.
 3. **AC-009** **Given** `--among asha,ravi`, **Then** only those members get a share and `meera`'s
    share is `0` (she is not part of the expense).
 4. **AC-010** **Given** an amount that is not a positive decimal with at most 2 fractional digits
@@ -101,7 +114,7 @@ Some costs are not shared equally (one person had a bigger meal, rent split by r
 5. **AC-018** **Given** a percentage split that produces fractional paise
    (e.g. `--amount 100.01 --split percent --shares asha=50,ravi=50`), **Then** each share is first
    rounded down to the paisa and the leftover paise are allocated with the same remainder rule as
-   AC-008; shares sum to exactly `100.01`.
+   AC-008: asha `50.01`, ravi `50.00`; shares sum to exactly `100.01`.
 6. **AC-019** **Given** `--shares` used with `--split equal`, or `--among` used with
    `exact`/`percent`, or a member listed twice in `--shares`, or a share/percentage ≤ 0, **Then**
    exit code is `1` and stderr explains the conflict (`--shares is not allowed with equal split`,
@@ -166,8 +179,9 @@ then apply them with `pay` and verify all balances are zero.
 8. **AC-031** **Given** a payment where `--from` equals `--to`, **Then** exit code is `1` and stderr
    contains `cannot pay yourself`.
 9. **AC-032** **Given** a payment larger than what `--from` owes or than what `--to` is owed,
-   **Then** [NEEDS CLARIFICATION: reject the payment (overpayment not allowed) or accept it and let
-   balances flip sign?].
+   **Then** exit code is `4`, stderr contains `payment exceeds outstanding balance`, and nothing
+   is stored. (E.g. with ravi at `-500.00` and asha at `+600.00`, `pay --amount 500.01` is
+   rejected; `--amount 500` is accepted.)
 
 ---
 
@@ -186,7 +200,8 @@ A user lists expenses and deletes one entered by mistake.
 2. **AC-034** **When** the user runs `expense delete goa 1`, **Then** the expense is removed,
    balances are recomputed, and ids are never reused.
 3. **AC-035** **Given** settlements have already been recorded in the group, **When** the user
-   deletes an expense, **Then** [NEEDS CLARIFICATION: is deletion still allowed?].
+   deletes an expense, **Then** exit code is `4`, stderr contains
+   `cannot delete expense after settlements`, and the expense remains.
 4. **AC-036** **Given** a non-existent expense id, **Then** exit code is `3` and stderr contains
    `expense <id> not found in group goa`.
 
@@ -224,17 +239,19 @@ Data must survive across runs and never be silently destroyed.
   (`equal` default, `exact`, `percent`).
 - **FR-003**: System MUST represent money as integer paise and parse amounts as decimal strings
   with ≤ 2 fractional digits, in the range `0.01`–`1000000.00`.
-- **FR-004**: System MUST allocate equal and percentage splits so shares sum exactly to the amount,
-  using one documented remainder rule.
+- **FR-004**: System MUST allocate equal and percentage splits so shares sum exactly to the amount:
+  round each share down to the paisa, then give leftover paise one each to participants in
+  alphabetical order.
 - **FR-005**: System MUST validate exact shares sum to the amount and percentages sum to exactly 100.
 - **FR-006**: System MUST compute each member's balance as
   `paid − owed + settlements paid − settlements received`.
 - **FR-007**: System MUST guarantee the conservation invariant (balances sum to 0).
 - **FR-008**: System MUST propose settlements with the deterministic greedy algorithm (AC-024) and
   never more than `n − 1` transfers.
-- **FR-009**: System MUST record payments between members (`pay`).
+- **FR-009**: System MUST record payments between members (`pay`) and reject any payment that
+  exceeds the sender's debt or the receiver's credit (exit 4).
 - **FR-010**: System MUST list and delete expenses; ids are monotonically increasing per group and
-  never reused.
+  never reused; deletion is refused (exit 4) once the group has any settlement.
 - **FR-011**: System MUST persist data to one JSON file atomically and refuse to touch a corrupt
   file (exit 5).
 - **FR-012**: System MUST provide `--json` output for `group list`, `group show`, `expense list`,

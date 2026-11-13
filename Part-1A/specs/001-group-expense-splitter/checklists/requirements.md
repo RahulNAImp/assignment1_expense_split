@@ -14,7 +14,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain — 3 open (AC-008 remainder rule, AC-032 overpayment, AC-035 delete after settlement)
+- [x] No [NEEDS CLARIFICATION] markers remain (3 resolved in Clarifications session 2026-11-13)
 - [x] Requirements are testable and unambiguous (exact paise, ordering, exit codes)
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic
