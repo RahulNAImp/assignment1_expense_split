@@ -10,7 +10,7 @@ harness that is independent of the AI-generated code.
 | Part | Application | Nature | Harness verdict |
 |------|-------------|--------|-----------------|
 | [Part-1A](Part-1A/) | **SplitKaro**: group expense splitter & settle-up CLI (exact paise, deterministic settlement) | Deterministic | run-001 FAIL → repair → run-002 **PASS** (6/6 gates) |
-| [Part-1B](Part-1B/) | **TxnSense**: Gemini-powered Bank/UPI SMS → structured transaction, with OTP/phishing/injection guardrails | Non-deterministic (LLM) | run-001 FAIL (E3 safety 0.857) → prompt repair → run-003/004/005 **PASS** (E3 1.0, E4 0.986, judge coverage 22/23) |
+| [Part-1B](Part-1B/) | **TxnSense**: Gemini-powered Bank/UPI SMS → structured transaction, with OTP/phishing/injection guardrails | Non-deterministic (LLM) | run-001 FAIL (E3 safety 0.857) → prompt repair → repairs → final run-006 **PASS** (E3 1.0, E4 0.982, judge coverage 23/23) |
 
 ## Where to look (evidence map)
 

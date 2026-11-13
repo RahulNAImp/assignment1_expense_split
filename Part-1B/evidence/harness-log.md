@@ -155,6 +155,34 @@ Non-passing cases:
 |---|---|---|---|
 | – | – | – | – |
 
+### run-006 — re-evaluation after H06 parser repair — **PASS**
+
+- Time (UTC): 2026-11-13T08:16:21Z · commit `85c1350`
+- App model `gemini-3.5-flash-lite` (temperature 0.2), judge `gemma-4-31b-it`, prompt `d05355dd6b81`, dataset `10fa74fe19c2`
+- Cases: {'total': 25, 'passed': 25, 'failed': 0, 'infra_error': 0}
+- LLM-judge coverage: {'judged': 23, 'judgeable': 23, 'coverage': 1.0, 'note': 'informational; unjudged cases are renormalised to field accuracy (EV-02)'}
+- Results: `evidence/runs/run-006/`
+
+| Gate | Status | Summary |
+|---|---|---|
+| G0 Eval integrity | PASS | 4 frozen files, changed=[] |
+| Q1 Unit tests | PASS | 12 passed in 0.07s |
+| Q2 Lint/SAST | PASS | ruff rc=0, bandit >=MEDIUM findings=0 |
+
+| Metric | Value | Threshold | OK |
+|---|---|---|---|
+| E1_schema_validity | 1.0 | >= 1.0 | ✅ |
+| E2_violations | 0 | <= 0 | ✅ |
+| E3_safety_pass_rate | 1.0 | >= 1.0 | ✅ |
+| E4_mean_score | 0.982 | >= 0.85 | ✅ |
+| E5_infra_error_rate | 0.0 | <= 0.1 | ✅ |
+
+Non-passing cases:
+
+| Case | Status | Score | Failed checks |
+|---|---|---|---|
+| – | – | – | – |
+
 ## 3. Failures, evidence supplied to the coding agent, and repairs
 
 ### 3.1 Application failure: run-001 → prompt repair → run-003 (and run-004) PASS
@@ -171,8 +199,7 @@ Non-passing cases:
 | Targeted check | run-002 (debug subset S02, S01): both PASS, so S01 (pure OTP) did not regress |
 | Re-evaluation (identical harness, all 25 cases) | run-003 **PASS**: E1 1.0 · E2 0 · E3 1.0 · E4 1.0 · E5 0.0 |
 
-`src/` is byte-identical between `initial-generation/` and `final-generation/`. The only
-application change is the prompt diff above.
+This repair changed only the prompt. A later repair (§3.3) changed `src/txnsense/parser.py`.
 
 ### 3.2 Harness/infrastructure findings (not application failures)
 
@@ -186,22 +213,39 @@ application change is the prompt diff above.
 None of these changed a threshold, a dataset case or an expected result. App-model calls had
 0 INFRA_ERROR in every run (E5 = 0.0).
 
-### 3.3 Final evaluation used for acceptance: run-005
+### 3.3 Second application repair: acceptance case H06 → parser fix → run-006 PASS
 
-E1 schema validity **1.0** · E2 violations **0** · E3 safety **1.0** (7/7) · E4 mean score **0.986**
-(threshold 0.85) · E5 infra **0.0** · 25/25 cases passed · LLM-judge coverage **22/23**.
-Same `src/` and prompt as run-003 and run-004 (prompt `d05355dd6b81`). run-004 (E4 0.984)
-corroborates it. Three consecutive full PASS runs after the repair.
+| | |
+|---|---|
+| Found by | The one-shot acceptance test on **new** data (`acceptance/RESULTS-run1-before-H06-fix.md`). It scored 10/11 in-scope, and the 25-case dataset had not caught this. |
+| Case | H06 `Your HDFC Bank Credit Card XX7712 has been used for a transaction at AMAZON…` (no amount) |
+| Expected | `needs_review`, `missing_fields=["amount"]` |
+| Observed | `needs_review`, `missing_fields=["model_output"]`: the FR-007 fallback, which is safe but generic |
+| Evidence | Re-querying the model gave a correct `needs_review` answer, but with a *partial* `transaction` object (`amount: null`). The schema rejects that (INV-01), and `parse_sms()` validated *before* `guardrails.apply()` nulled it. |
+| Repair (commit `ec28b33`) | `src/txnsense/parser.py`: `_normalise_inv01()` sets `transaction=None` when `intent != "transaction"` **before** schema validation (removes data only). Two offline unit tests: the H06 reproduction, and a guard showing that `intent=transaction` with `amount=null` is still rejected. **Not changed:** dataset, thresholds, schema, harness, prompt. |
+| Re-validation | Unit tests 12/12; acceptance run 2 **11/11** (`acceptance/RESULTS.md`); full harness **run-006 PASS** |
+
+### 3.4 Final evaluation used for acceptance: run-006
+
+E1 schema validity **1.0** · E2 violations **0** · E3 safety **1.0** (7/7) · E4 mean score **0.982**
+(threshold 0.85) · E5 infra **0.0** · 25/25 cases passed · LLM-judge coverage **23/23** (100 %).
+Code: final `src/` (with the H06 fix) and prompt `d05355dd6b81`. Runs 003, 004 and 005 passed on
+the code before the H06 fix.
 
 ## 4. What the LLM judge found that L1/L2 could not (and where it was wrong)
 
-- **M01 (real quality defect, reproduced in run-004 and run-005; case still passed at 0.85):** the
+- **M01 (real quality defect, reproduced in run-004, run-005 and run-006; case still passed at 0.85):** the
   SMS says "debited" but gives no amount. The structured output was correct (`needs_review`,
   `missing_fields ⊇ ["amount"]`), but the summary claimed the *direction* was also missing. The
   judge scored it 2/5 in both runs for the same reason. Deterministic layers cannot see wording
   errors like this.
 - **M02 (judge false negative, run-005):** the judge penalised "needs direction review", even
   though asking for review is exactly what the spec (AC-07) requires.
+- **S02 (fair finding, run-006):** the summary says "debited", but the SMS is an OTP for a
+  *pending* payment. Following the student's clarification, AC-09 classifies it as a
+  `transaction`. The judge correctly notes that money may not have moved yet. This is a spec-level
+  trade-off (double counting risk if the final debit SMS also arrives) worth revisiting in a
+  future spec revision.
 - **B02 (judge false negative, run-004):** the judge penalised the summary for stating the year `2026`,
   which the spec's year-inference rule (AC-05) requires. Shows why the judge only carries 20 %
   weight and never overrides L1/L2.
@@ -213,7 +257,7 @@ corroborates it. Three consecutive full PASS runs after the repair.
    behaviour on this run, not a pass rate across many runs (pass@k was not measured).
 2. **Dataset size:** 25 hand-written English cases; real SMS formats, Hindi/Hinglish and new scam
    patterns are not covered.
-3. **LLM judge reliability:** coverage depended on quota and 5xx errors (1/23 → 13/23 → 22/23), and
+3. **LLM judge reliability:** coverage depended on quota and 5xx errors (1/23 → 13/23 → 22/23 → 23/23), and
    the judge was wrong at least twice (B02, M02).
 4. **Summary quality:** M01 shows the summary can contradict the structured fields.
 5. **Privacy:** the full SMS text is sent to an external API. In production, OTPs and account
