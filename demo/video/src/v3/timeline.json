@@ -1,0 +1,166 @@
+{
+  "fps": 30,
+  "totalFrames": 4766,
+  "scenes": [
+    {
+      "id": "v01_intro",
+      "audio": "v3/v01_intro.wav",
+      "beats": [
+        0.0,
+        6.782,
+        8.994
+      ],
+      "tag": "",
+      "caption": "",
+      "slide": "intro",
+      "frames": 420
+    },
+    {
+      "id": "v02_split_idea",
+      "audio": "v3/v02_split_idea.wav",
+      "beats": [
+        0.0,
+        3.165
+      ],
+      "tag": "",
+      "caption": "",
+      "slide": "split_idea",
+      "frames": 272
+    },
+    {
+      "id": "v03_split_shares",
+      "audio": "v3/v03_split_shares.wav",
+      "beats": [
+        0.0,
+        2.249
+      ],
+      "tag": "",
+      "caption": "",
+      "slide": "split_shares",
+      "frames": 316
+    },
+    {
+      "id": "v04_split_balance",
+      "audio": "v3/v04_split_balance.wav",
+      "beats": [
+        0.0,
+        2.166,
+        5.788
+      ],
+      "tag": "",
+      "caption": "",
+      "slide": "split_balance",
+      "frames": 292
+    },
+    {
+      "id": "v05_split_settle",
+      "audio": "v3/v05_split_settle.wav",
+      "beats": [
+        0.0
+      ],
+      "tag": "",
+      "caption": "",
+      "slide": "split_settle",
+      "frames": 180
+    },
+    {
+      "id": "v06_split_console",
+      "audio": "v3/v06_split_console.wav",
+      "beats": [
+        0.0,
+        2.446,
+        3.145
+      ],
+      "tag": "PART 1A",
+      "caption": "Same example, running live in the terminal",
+      "clip": "v3/v06_split_console.mp4",
+      "clipFrames": 524,
+      "clipFromBeat": 0,
+      "frames": 535
+    },
+    {
+      "id": "v07_split_code",
+      "audio": "v3/v07_split_code.wav",
+      "beats": [
+        0.0,
+        2.689
+      ],
+      "tag": "PART 1A",
+      "caption": "The real code, and its tests passing",
+      "clip": "v3/v07_split_code.mp4",
+      "clipFrames": 435,
+      "clipFromBeat": 0,
+      "frames": 446
+    },
+    {
+      "id": "v08_harness",
+      "audio": "v3/v08_harness.wav",
+      "beats": [
+        0.0,
+        3.164,
+        6.012
+      ],
+      "tag": "PART 1A",
+      "caption": "One command: all 6 checks PASS",
+      "slide": "harness",
+      "clip": "v3/v08_harness.mp4",
+      "clipFrames": 281,
+      "clipFromBeat": 2,
+      "frames": 471
+    },
+    {
+      "id": "v09_txn_idea",
+      "audio": "v3/v09_txn_idea.wav",
+      "beats": [
+        0.0,
+        3.648
+      ],
+      "tag": "",
+      "caption": "",
+      "slide": "txn_idea",
+      "frames": 284
+    },
+    {
+      "id": "v10_txn_console",
+      "audio": "v3/v10_txn_console.wav",
+      "beats": [
+        0.0,
+        4.374,
+        6.926
+      ],
+      "tag": "PART 1B",
+      "caption": "Live Gemini calls: normal, scam, trick message",
+      "clip": "v3/v10_txn_console.mp4",
+      "clipFrames": 849,
+      "clipFromBeat": 0,
+      "frames": 860
+    },
+    {
+      "id": "v11_txn_eval",
+      "audio": "v3/v11_txn_eval.wav",
+      "beats": [
+        0.0,
+        4.448
+      ],
+      "tag": "PART 1B",
+      "caption": "Final result: 25 / 25 pass",
+      "slide": "eval",
+      "clip": "v3/v11_txn_eval.mp4",
+      "clipFrames": 264,
+      "clipFromBeat": 1,
+      "frames": 408
+    },
+    {
+      "id": "v12_outro",
+      "audio": "v3/v12_outro.wav",
+      "beats": [
+        0.0,
+        3.378
+      ],
+      "tag": "",
+      "caption": "",
+      "slide": "outro",
+      "frames": 282
+    }
+  ]
+}

@@ -183,3 +183,18 @@ between `initial-generation/` and `final-generation/`.
 - What I checked manually:
 - Decision: **ACCEPT / REJECT** (delete one)
 - Justification:
+
+### run-009 — demo video v3 — **PASS**
+
+- Time (UTC): 2026-11-15T05:43:07Z
+- Git commit under test: `40911e9`
+- Result file: `evidence/harness-results/run-009.json`
+
+| Gate | Result | Summary |
+|------|--------|---------|
+| G0 Integrity | ✅ PASS | 16 locked files; changed=0 missing=0 new_tests=0 |
+| G1 Lint & format | ✅ PASS | 0 lint violation(s), 0 file(s) need formatting |
+| G2 Security/SAST | ✅ PASS | 0 finding(s) >= MEDIUM (0 total incl. LOW) |
+| G3 Spec tests | ✅ PASS | 107/107 passed, 0 failed, 0 skipped |
+| G4 Coverage | ✅ PASS | 96.8% line coverage (threshold 90%) |
+| G5 Traceability | ✅ PASS | 40/40 acceptance criteria referenced by tests |

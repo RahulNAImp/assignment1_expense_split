@@ -1,5 +1,7 @@
 import { Composition, Folder } from "remotion";
 import { Demo } from "./Demo";
+import { DemoV3 } from "./v3/DemoV3";
+import timelineV3 from "./v3/timeline.json";
 import { OutroScene } from "./OutroScene";
 import timeline from "./timeline.json";
 import { TitleScene } from "./TitleScene";
@@ -16,6 +18,7 @@ export const RemotionRoot: React.FC = () => (
       <Composition id="Workflow" component={WorkflowScene} durationInFrames={frames("s02_workflow")} fps={30} width={W} height={H} />
       <Composition id="Outro" component={OutroScene} durationInFrames={frames("s10_outro")} fps={30} width={W} height={H} />
     </Folder>
+    <Composition id="DemoV3" component={DemoV3} durationInFrames={timelineV3.totalFrames} fps={30} width={W} height={H} />
     <Composition id="Demo" component={Demo} durationInFrames={timeline.totalFrames} fps={30} width={W} height={H} />
   </>
 );
